@@ -23,4 +23,26 @@ All of these commands must be run from the root of your project directory.
 - For your first use of git, it will require you to enter a name and email for identifying changes:
   - **git config --global user.name "John Doe"**
   - **git config --global user.email johndoe@example.com**
+  
+##SRA list:
+
+    - Objectives: Pragya
+    - Context Diagram: Karen
+    - Software Processes and Infrastructure: Celine
+    - Assumptions and Constraints: Karen
+    - Delivery Schedule: Daniel
+    - Appendix: Daniel
+
+
+##Requirements:
+
+    1) Start Screen: Karen
+    2) Upload File Chooser: Karen
+    3) Camera: Celine
+    4) Image Preprocessing UI: Daniel
+    5) Save to Format: Pragya
+    6) Crop: Daniel
+    7) Rotate: Daniel
+    8) Undo / Cancel / Done (For Image Prepossessing): Pragya
+    9) Help Button: Celine
 
