@@ -46,3 +46,15 @@ All of these commands must be run from the root of your project directory.
     8) Undo / Cancel / Done (For Image Prepossessing): Pragya
     9) Help Button: Celine
 
+##Dependencies
+
+    - Android SDK
+        - Android libraries
+        - adb
+    - Android NDK
+        - ndk-build
+        - android update
+    - tess-two library
+        - Android bindings for tesseract library
+    - tessdata
+        - Trained Language files
