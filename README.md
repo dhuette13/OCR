@@ -46,7 +46,7 @@ All of these commands must be run from the root of your project directory.
     8) Undo / Cancel / Done (For Image Prepossessing): Pragya
     9) Help Button: Celine
 
-##Dependencies
+##Dependencies:
 
     - Android SDK 22
         - Android libraries
@@ -59,3 +59,25 @@ All of these commands must be run from the root of your project directory.
     - tessdata
         - Trained Language files
     - Google API 22
+    
+##Setup:
+  
+    - Download and install android sdk and ndk
+      - Will need commands from these packages.
+    - git clone https://github.com/dhuette13/OCR.git
+    - **Build tess two**
+      - cd OCR/tess-two
+      - ndk-build
+      - android update project --path .
+      - ant release
+    - **Setup Eclipse**
+      - Install ADT
+      - Specify path to SDK and NDK in Preferences
+      - Import existing Android Projects
+        - tess-two
+        - tess-two-test (Test Suite)
+        - OCRApp
+      - Set tess-two as library
+        - tess-two-test
+        - OCRApp
+  
