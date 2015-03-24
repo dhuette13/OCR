@@ -48,7 +48,7 @@ All of these commands must be run from the root of your project directory.
 
 ##Dependencies
 
-    - Android SDK
+    - Android SDK 22
         - Android libraries
         - adb
     - Android NDK
@@ -58,3 +58,4 @@ All of these commands must be run from the root of your project directory.
         - Android bindings for tesseract library
     - tessdata
         - Trained Language files
+    - Google API 22
