@@ -28,3 +28,4 @@ proguard/
 # Eclipse metadata
 .classpath
 .settings
+.metadata
