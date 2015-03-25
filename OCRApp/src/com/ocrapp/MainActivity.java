@@ -1,21 +1,62 @@
 package com.ocrapp;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Align;
+import android.graphics.Paint.Style;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
 
 public class MainActivity extends Activity {
+	private static final String TESSBASE_PATH = "/mnt/sdcard/tesseract/";
+	private static final String DEFAULT_LANGUAGE = "eng";
 
+	private TextView textView;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		TessBaseAPI baseAPI = new TessBaseAPI();
+		textView = (TextView) findViewById(R.id.textView1);
+
+		final String inputText = "Test text";
+		final Bitmap bmp = getTextImage(inputText, 640, 480);
+
+		final TessBaseAPI baseApi = new TessBaseAPI();
+		baseApi.init(TESSBASE_PATH, DEFAULT_LANGUAGE);
+		baseApi.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SINGLE_LINE);
+		baseApi.setImage(bmp);
+		String text = baseApi.getUTF8Text();
+		
+		textView.setText(text);
+		
+		baseApi.end();
 	}
+	
+    private static Bitmap getTextImage(String text, int width, int height) {
+        final Bitmap bmp = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        final Paint paint = new Paint();
+        final Canvas canvas = new Canvas(bmp);
+
+        canvas.drawColor(Color.WHITE);
+
+        paint.setColor(Color.BLACK);
+        paint.setStyle(Style.FILL);
+        paint.setAntiAlias(true);
+        paint.setTextAlign(Align.CENTER);
+        paint.setTextSize(24.0f);
+        canvas.drawText(text, width / 2, height / 2, paint);
+
+        return bmp;
+    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

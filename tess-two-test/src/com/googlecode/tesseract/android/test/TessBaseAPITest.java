@@ -16,28 +16,27 @@
 
 package com.googlecode.tesseract.android.test;
 
-import com.googlecode.leptonica.android.Pixa;
-import com.googlecode.tesseract.android.ResultIterator;
-import com.googlecode.tesseract.android.TessBaseAPI;
-import com.googlecode.tesseract.android.TessBaseAPI.PageIteratorLevel;
+import java.io.File;
+import java.util.List;
 
+import junit.framework.TestCase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
+import android.os.Environment;
 import android.test.suitebuilder.annotation.SmallTest;
-import android.util.Log;
 import android.util.Pair;
 
-import java.io.File;
-import java.util.List;
-
-import junit.framework.TestCase;
+import com.googlecode.leptonica.android.Pixa;
+import com.googlecode.tesseract.android.ResultIterator;
+import com.googlecode.tesseract.android.TessBaseAPI;
+import com.googlecode.tesseract.android.TessBaseAPI.PageIteratorLevel;
 
 public class TessBaseAPITest extends TestCase {
-    private static final String TESSBASE_PATH = "/mnt/sdcard/tesseract/";
+    private static final String TESSBASE_PATH = Environment.getExternalStorageDirectory().getPath() + "/tesseract/";
     private static final String DEFAULT_LANGUAGE = "eng";
     private static final String EXPECTED_FILE = TESSBASE_PATH + "tessdata/" + DEFAULT_LANGUAGE
             + ".traineddata";
