@@ -44,7 +44,8 @@ All of these commands must be run from the root of your project directory.
     6) Crop: Daniel
     7) Rotate: Daniel
     8) Undo / Cancel / Done (For Image Prepossessing): Pragya
-    9) Help Button: Celine
+    9) Text Preview
+    10) Help Button: Celine
 
 ##Dependencies:
 
