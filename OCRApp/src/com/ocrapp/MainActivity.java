@@ -1,6 +1,9 @@
 package com.ocrapp;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -8,14 +11,16 @@ import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import br.com.thinkti.android.filechooser.FileChooser;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
 
 public class MainActivity extends Activity {
-	private static final String TESSBASE_PATH = "/mnt/sdcard/tesseract/";
+	private static final String TESSBASE_PATH = Environment.getExternalStorageDirectory().getPath() + "/tesseract/";
 	private static final String DEFAULT_LANGUAGE = "eng";
 
 	private TextView textView;
@@ -39,6 +44,14 @@ public class MainActivity extends Activity {
 		textView.setText(text);
 		
 		baseApi.end();
+		
+		Intent intent = new Intent(this, FileChooser.class);
+		ArrayList<String> extensions = new ArrayList<String>();
+		extensions.add(".pdf");
+		extensions.add(".xls");
+		extensions.add(".xlsx");
+		intent.putStringArrayListExtra("filterFileExtension", extensions);
+		startActivityForResult(intent, 1);
 	}
 	
     private static Bitmap getTextImage(String text, int width, int height) {
