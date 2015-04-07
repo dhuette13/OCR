@@ -101,7 +101,7 @@ All of these commands must be run from the root of your project directory.
 
    - Color Concept: white prevalent, blue-green accents
    - File Upload and Save to Format can use FileChooser
-   - Save to Format will probably require a PDF Library
+   - Save to Format will probably require a PDF Library; "Text successfully saved." pop-up
    - Help "screen"/"pop-up" shows FAQ and general tips & tricks to help user understand the current screen and what to do (OK button)
    - Conversion needs buffer screen
    - Text Preview allows scrolling (buttons: Cancel and OK)
