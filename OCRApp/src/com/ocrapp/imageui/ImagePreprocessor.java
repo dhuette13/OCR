@@ -93,7 +93,7 @@ public class ImagePreprocessor extends Activity {
 			int screenWidth = displaymetrics.widthPixels;
 			Crop.setNodes(node1, node2, node3, node4);
 			Crop.setImage(imageBitmap);
-			imageBitmap = Crop.cropBitmap(screenWidth, screenHeight);
+			imageBitmap = Crop.cropBitmap(imageView.getWidth(), imageView.getHeight());
 			imageView.setImageBitmap(imageBitmap);
 		}
 		else if(id == R.id.rotate_left){
