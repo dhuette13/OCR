@@ -14,6 +14,8 @@ import com.ocrapp.R;
 public class ImagePreprocessor extends Activity {
 
 	Bitmap imageBitmap;
+	Crop crop;
+	Flip flip;
 	
 	TextImageView imageView;
 	ImageView node1;
@@ -25,7 +27,6 @@ public class ImagePreprocessor extends Activity {
 	NodeTouchListener touchListener3;
 	NodeTouchListener touchListener4;
 	NodeDragListener dragListener;
-	Crop crop;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,14 +85,27 @@ public class ImagePreprocessor extends Activity {
 		if (id == R.id.action_settings) {
 			return true;
 		}
-		else if(id == R.id.action_crop) {
+		else if(id == R.id.crop) {
+			System.out.println("CROPPING IMAGE");
 			DisplayMetrics displaymetrics = new DisplayMetrics();
 			getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
 			int screenHeight = displaymetrics.heightPixels;
 			int screenWidth = displaymetrics.widthPixels;
-			crop = new Crop(node1, node2, node3, node4);
-			crop.setImage(imageBitmap);
-			imageBitmap = crop.crop(screenWidth, screenHeight);
+			Crop.setNodes(node1, node2, node3, node4);
+			Crop.setImage(imageBitmap);
+			imageBitmap = Crop.cropBitmap(screenWidth, screenHeight);
+			imageView.setImageBitmap(imageBitmap);
+		}
+		else if(id == R.id.rotate_left){
+			System.out.println("ROTATING IMAGE LEFT");
+			Flip.setImage(imageBitmap);
+			imageBitmap = Flip.rotateBitmap(-90);
+			imageView.setImageBitmap(imageBitmap);
+		}
+		else if(id == R.id.rotate_right){
+			System.out.println("ROTATING IMAGE RIGHT");
+			Flip.setImage(imageBitmap);
+			imageBitmap = Flip.rotateBitmap(90);
 			imageView.setImageBitmap(imageBitmap);
 		}
 		return super.onOptionsItemSelected(item);

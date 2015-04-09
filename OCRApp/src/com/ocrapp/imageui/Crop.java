@@ -1,7 +1,6 @@
 package com.ocrapp.imageui;
 
 import android.graphics.Bitmap;
-import android.util.DisplayMetrics;
 import android.widget.ImageView;
 
 import com.googlecode.leptonica.android.Box;
@@ -12,21 +11,14 @@ import com.googlecode.leptonica.android.WriteFile;
 
 public class Crop {
 
-	private ImageView node1, node2, node3, node4;
-	private Bitmap image;
+	private static ImageView node1, node2, node3, node4;
+	private static Bitmap image;
 	
-	public Crop(ImageView node1, ImageView node2, ImageView node3, ImageView node4) {
-		this.node1 = node1;
-		this.node2 = node2;
-		this.node3 = node3;
-		this.node4 = node4;
-	}
-
-	public void setImage(Bitmap imageBitmap) {
+	public static void setImage(Bitmap imageBitmap) {
 		image = imageBitmap;
 	}
 	
-	public Bitmap crop(int screenWidth, int screenHeight){
+	public static Bitmap cropBitmap(int screenWidth, int screenHeight){
 		int width = image.getWidth();
 		int height = image.getHeight();
 		
@@ -48,6 +40,14 @@ public class Crop {
 		Bitmap croppedBitmap = WriteFile.writeBitmap(croppedPix);
 		
 		return croppedBitmap;
+	}
+
+	public static void setNodes(ImageView n1, ImageView n2, ImageView n3, ImageView n4) {
+		node1 = n1;
+		node2 = n2;
+		node3 = n3;
+		node4 = n4;
+		
 	}
 
 }

@@ -8,9 +8,24 @@
         android:showAsAction="never"
         android:title="@string/action_settings"/>
     <item
-        android:id="@+id/action_crop"
+        android:id="@+id/rotate_left"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_rotate_left">
+    </item>
+    
+    <item
+        android:id="@+id/rotate_right"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_rotate_right">
+    </item>
+    
+    <item
+        android:id="@+id/crop"
         android:orderInCategory="100"
         android:showAsAction="ifRoom"
         android:title="@string/action_crop"/>
+    
 
 </menu>
