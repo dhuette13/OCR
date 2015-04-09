@@ -27,6 +27,7 @@ public class Crop {
 		width = pix.getWidth();
 		height = pix.getHeight();
 		
+		
 		int x1 = (width * ((int) node1.getX())) / screenWidth;
 		int y1 = (height * ((int) node1.getY())) / screenHeight;
 		int x2 = (width * ((int) node2.getX())) / screenWidth;
