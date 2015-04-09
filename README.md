@@ -103,7 +103,7 @@ All of these commands must be run from the root of your project directory.
    - File Upload and Save to Format can use FileChooser
    - Save to Format will probably require a PDF Library; "Text successfully saved." pop-up
    - Help "screen"/"pop-up" shows FAQ and general tips & tricks to help user understand the current screen and what to do (OK button)
-   - Conversion needs buffer screen
+   - Conversion needs buffer screen: <a href="http://developer.android.com/reference/android/widget/ProgressBar.html">ProgressBar class</a>
    - Text Preview allows scrolling (buttons: Cancel and OK)
    - Save to Format: 3 main buttons (TXT, PDF, Cancel) along with a Help Button
    - Image Preprocessing: 6 main buttons, help button, and nodes to allow user to select the area of text they want to convert
