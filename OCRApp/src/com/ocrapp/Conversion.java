@@ -45,7 +45,8 @@ public class Conversion extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_conversion);
 		
-		mProgress = (ProgressBar) findViewByID(R.id.progress_bar);
+		//mProgress = (ProgressBar) findViewByID(R.id.progress_bar);
+		//mProgress.setVisibility(View.VISIBLE);
 		
 		/*new Thread(new Runnable() {
             public void run() {
@@ -81,6 +82,8 @@ public class Conversion extends Activity {
 		baseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SINGLE_LINE);
 		baseAPI.setImage(newBitmap);
 		text = baseAPI.getUTF8Text();
+		
+		System.out.println(text);
 		// return text for text preview
 	}
 
