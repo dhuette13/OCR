@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -51,10 +50,10 @@ public class ImagePreprocessor extends Activity {
 		
 		/* Create and set drag / touch listeners */
 		dragListener = new NodeDragListener(node1, node2, node3, node4);
-		touchListener1 = new NodeTouchListener(Nodes.NODE1, node1.getX(), node1.getY(), 1);
-		touchListener2 = new NodeTouchListener(Nodes.NODE1, node2.getX(), node2.getY(), 2);
-		touchListener3 = new NodeTouchListener(Nodes.NODE1, node3.getX(), node3.getY(), 3);
-		touchListener4 = new NodeTouchListener(Nodes.NODE1, node4.getX(), node4.getY(), 4);
+		touchListener1 = new NodeTouchListener(node1.getX(), node1.getY(), 1);
+		touchListener2 = new NodeTouchListener(node2.getX(), node2.getY(), 2);
+		touchListener3 = new NodeTouchListener(node3.getX(), node3.getY(), 3);
+		touchListener4 = new NodeTouchListener(node4.getX(), node4.getY(), 4);
 		
 		node1.setOnTouchListener(touchListener1);
 		node2.setOnTouchListener(touchListener2);
@@ -98,10 +97,6 @@ public class ImagePreprocessor extends Activity {
 		else if(id == R.id.crop) {
 			history.add(imageBitmap);
 			System.out.println("CROPPING IMAGE");
-			DisplayMetrics displaymetrics = new DisplayMetrics();
-			getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-			int screenHeight = displaymetrics.heightPixels;
-			int screenWidth = displaymetrics.widthPixels;
 			Crop.setNodes(node1, node2, node3, node4);
 			Crop.setImage(imageBitmap);
 			imageBitmap = Crop.cropBitmap(imageView.getWidth(), imageView.getHeight());
