@@ -2,7 +2,6 @@ package com.ocrapp.imageui;
 
 import java.util.ArrayList;
 
-import startscreen.StartActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,6 +14,7 @@ import android.widget.ImageView;
 
 import com.ocrapp.Conversion;
 import com.ocrapp.R;
+import com.ocrapp.startscreen.StartActivity;
 
 public class ImagePreprocessor extends Activity {
 
