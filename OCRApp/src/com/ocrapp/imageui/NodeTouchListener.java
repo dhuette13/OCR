@@ -1,7 +1,6 @@
 package com.ocrapp.imageui;
 
 import android.content.ClipData;
-import android.content.ClipDescription;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.DragShadowBuilder;
@@ -22,10 +21,11 @@ public class NodeTouchListener implements OnTouchListener {
 	public boolean onTouch(View view, MotionEvent motionEvent) {
 		view = (ImageView) view;
 		if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
-			ClipData.Item item = new ClipData.Item((CharSequence) node.toString());
-			String[] mimeTypes = {ClipDescription.MIMETYPE_TEXT_PLAIN};
-//			ClipData data = ClipData.newPlainText("node", node.toString());
-			ClipData data = new ClipData("node", mimeTypes, item);
+//			ClipData.Item item = new ClipData.Item((CharSequence) node.toString());
+//			String[] mimeTypes = {ClipDescription.MIMETYPE_TEXT_PLAIN};
+//			ClipData data = new ClipData("node", mimeTypes, item);
+			
+			ClipData data = ClipData.newPlainText("node", node.toString());
 			DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
 			System.out.println("ACTION DOWN");
 			view.startDrag(data, shadowBuilder, view, 0);

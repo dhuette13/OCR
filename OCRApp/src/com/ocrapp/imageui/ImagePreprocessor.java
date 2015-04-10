@@ -47,7 +47,6 @@ public class ImagePreprocessor extends Activity {
 		touchListener3 = new NodeTouchListener(Nodes.NODE1, node3.getX(), node3.getY());
 		touchListener4 = new NodeTouchListener(Nodes.NODE1, node4.getX(), node4.getY());
 		
-		imageView.setOnDragListener(dragListener);
 		node1.setOnTouchListener(touchListener1);
 		node2.setOnTouchListener(touchListener2);
 		node3.setOnTouchListener(touchListener3);
@@ -61,6 +60,7 @@ public class ImagePreprocessor extends Activity {
         imageBitmap = BitmapFactory.decodeFile(fileSelected, options);
         imageView.setImageBitmap(imageBitmap);
         
+        imageView.setOnDragListener(dragListener);
 	}
 
 //	@Override
