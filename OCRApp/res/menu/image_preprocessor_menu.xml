@@ -7,8 +7,9 @@
         android:showAsAction="ifRoom"
         android:title="Title"/>
     <item
-        android:id="@+id/help"
+        android:id="@+id/cancel"
         android:icon="@drawable/ic_launcher"
-        android:title="Help"/>
+        android:showAsAction="ifRoom"
+        android:title="Cancel"/>
 
 </menu>

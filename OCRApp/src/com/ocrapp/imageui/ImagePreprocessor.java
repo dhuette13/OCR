@@ -5,8 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.ocrapp.R;
@@ -14,6 +17,7 @@ import com.ocrapp.R;
 public class ImagePreprocessor extends Activity {
 
 	Bitmap imageBitmap;
+	Bitmap oldBitmap;
 	Crop crop;
 	Flip flip;
 	
@@ -47,7 +51,6 @@ public class ImagePreprocessor extends Activity {
 		touchListener3 = new NodeTouchListener(Nodes.NODE1, node3.getX(), node3.getY());
 		touchListener4 = new NodeTouchListener(Nodes.NODE1, node4.getX(), node4.getY());
 		
-		imageView.setOnDragListener(dragListener);
 		node1.setOnTouchListener(touchListener1);
 		node2.setOnTouchListener(touchListener2);
 		node3.setOnTouchListener(touchListener3);
@@ -61,6 +64,7 @@ public class ImagePreprocessor extends Activity {
         imageBitmap = BitmapFactory.decodeFile(fileSelected, options);
         imageView.setImageBitmap(imageBitmap);
         
+        imageView.setOnDragListener(dragListener);
 	}
 
 //	@Override
@@ -68,11 +72,13 @@ public class ImagePreprocessor extends Activity {
 //		super.onCreateContextMenu(menu, v, menuInfo);
 //		getMenuInflater().inflate(R.menu.image_preprocessor_menu, menu);
 //	}
-	
+//	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
+		super.onCreateOptionsMenu(menu);
 		getMenuInflater().inflate(R.menu.image_preprocessor, menu);
+//		getMenuInflater().inflate(R.menu.image_preprocessor_menu, menu);
 		return true;
 	}
 
@@ -86,6 +92,7 @@ public class ImagePreprocessor extends Activity {
 			return true;
 		}
 		else if(id == R.id.crop) {
+			oldBitmap = imageBitmap;
 			System.out.println("CROPPING IMAGE");
 			DisplayMetrics displaymetrics = new DisplayMetrics();
 			getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
@@ -93,19 +100,26 @@ public class ImagePreprocessor extends Activity {
 			int screenWidth = displaymetrics.widthPixels;
 			Crop.setNodes(node1, node2, node3, node4);
 			Crop.setImage(imageBitmap);
-			imageBitmap = Crop.cropBitmap(screenWidth, screenHeight);
+			imageBitmap = Crop.cropBitmap(imageView.getWidth(), imageView.getHeight());
 			imageView.setImageBitmap(imageBitmap);
 		}
 		else if(id == R.id.rotate_left){
+			oldBitmap = imageBitmap;
 			System.out.println("ROTATING IMAGE LEFT");
 			Flip.setImage(imageBitmap);
 			imageBitmap = Flip.rotateBitmap(-90);
 			imageView.setImageBitmap(imageBitmap);
 		}
 		else if(id == R.id.rotate_right){
+			oldBitmap = imageBitmap;
 			System.out.println("ROTATING IMAGE RIGHT");
 			Flip.setImage(imageBitmap);
 			imageBitmap = Flip.rotateBitmap(90);
+			imageView.setImageBitmap(imageBitmap);
+		}
+		else if(id == R.id.undo){
+			imageBitmap = oldBitmap;
+			System.out.println("UNDOING");
 			imageView.setImageBitmap(imageBitmap);
 		}
 		return super.onOptionsItemSelected(item);

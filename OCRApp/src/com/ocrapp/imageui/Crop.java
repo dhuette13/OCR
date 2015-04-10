@@ -21,16 +21,19 @@ public class Crop {
 	public static Bitmap cropBitmap(int screenWidth, int screenHeight){
 		int width = image.getWidth();
 		int height = image.getHeight();
+		int nodeXOffset = node1.getWidth() / 2;
+		int nodeYOffset = node1.getHeight() / 2;
 		
 		/* Read original bitmap file to Pix object */
 		Pix pix = ReadFile.readBitmap(image);
 		width = pix.getWidth();
 		height = pix.getHeight();
 		
-		int x1 = (width * ((int) node1.getX())) / screenWidth;
-		int y1 = (height * ((int) node1.getY())) / screenHeight;
-		int x2 = (width * ((int) node2.getX())) / screenWidth;
-		int y2 = (height * ((int) node3.getY())) / screenHeight;
+		
+		int x1 = (width * ((int) node1.getX() + nodeXOffset)) / screenWidth;
+		int y1 = (height * ((int) node1.getY() + nodeYOffset)) / screenHeight;
+		int x2 = (width * ((int) node2.getX() + nodeXOffset)) / screenWidth;
+		int y2 = (height * ((int) node3.getY() + nodeYOffset)) / screenHeight;
 		int cropWidth = x2 - x1;
 		int cropHeight = y2 - y1;
 		
