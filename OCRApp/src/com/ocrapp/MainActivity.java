@@ -29,8 +29,6 @@ public class MainActivity extends Activity {
 
 		Intent startScreen= new Intent(this, StartActivity.class);
 		startActivity(startScreen);
-
-		
 	}
 	
 	@Override
