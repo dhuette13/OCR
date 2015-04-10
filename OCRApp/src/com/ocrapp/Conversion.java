@@ -19,7 +19,7 @@ public class Conversion {
 	public static String convertBitmap(){
 		final TessBaseAPI baseApi = new TessBaseAPI();
 		baseApi.init(TESSBASE_PATH, DEFAULT_LANGUAGE);
-		baseApi.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SINGLE_LINE);
+		baseApi.setPageSegMode(TessBaseAPI.PageSegMode.PSM_AUTO);
 		baseApi.setImage(bmp);
 		String text = baseApi.getUTF8Text();
 		

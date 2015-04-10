@@ -64,7 +64,7 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 		   		
 		   		Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 		   		if (cameraIntent.resolveActivity(getPackageManager()) != null) {
-		   			startActivityForResult(cameraIntent, 0);
+		   			startActivityForResult(cameraIntent, 1);
 		   		}
 		       }
 		     };
@@ -143,7 +143,7 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 	        
 	        Intent imagePreprocessor = new Intent(this, ImagePreprocessor.class);
 	        imagePreprocessor.putExtra("file", fileSelected);
-	        imagePreprocessor.putExtra(lang, lang);
+	        imagePreprocessor.putExtra("lang", lang);
 	        startActivity(imagePreprocessor);
 	        
 //	        BitmapFactory.Options options = new BitmapFactory.Options();

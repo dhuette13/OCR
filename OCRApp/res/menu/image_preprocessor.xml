@@ -4,43 +4,39 @@
 
     <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/action_settings"/>
     <item
-        android:id="@+id/rotate_left"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/action_rotate_left"
-        android:icon="@android:drawable/ic_menu_rotate">
+        android:id="@+id/rotate_right"
+        android:icon="@android:drawable/ic_menu_rotate"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_rotate_right">
     </item>
     <item
-        android:id="@+id/rotate_right"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/action_rotate_right"
-        android:icon="@android:drawable/ic_menu_rotate">
+        android:id="@+id/rotate_left"
+        android:icon="@drawable/ic_menu_rotate_left"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_rotate_left">
     </item>
     <item
         android:id="@+id/crop"
         android:icon="@android:drawable/ic_menu_crop"
-        android:orderInCategory="100"
         android:showAsAction="ifRoom"
         android:title="@string/action_crop"/>
     <item
         android:id="@+id/OK"
+        android:icon="@drawable/ic_checkmark_holo_light"
         android:showAsAction="ifRoom"
-        android:title="OK"
-        android:icon="@android:drawable/ic_menu_send"/>
+        android:title="OK"/>
     <item
         android:id="@+id/undo"
+        android:icon="@android:drawable/ic_menu_revert"
         android:showAsAction="ifRoom"
-        android:title="Undo"
-        android:icon="@android:drawable/ic_menu_revert"/>
+        android:title="Undo"/>
     <item
         android:id="@+id/cancel"
-        android:showAsAction="never"
-        android:title="Cancel"
-        android:icon="@android:drawable/ic_menu_close_clear_cancel"/>
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:showAsAction="ifRoom"
+        android:title="Cancel"/>
 
 </menu>
