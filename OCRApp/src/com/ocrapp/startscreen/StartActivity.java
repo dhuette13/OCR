@@ -1,4 +1,4 @@
-package startscreen;
+package com.ocrapp.startscreen;
 
 import java.util.ArrayList;
 

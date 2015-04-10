@@ -23,7 +23,7 @@
             android:label="@string/title_activity_image_preprocessor" >
         </activity>
         <activity
-            android:name="startscreen.StartActivity"
+            android:name="com.ocrapp.startscreen.StartActivity"
             android:label="@string/title_activity_start" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
