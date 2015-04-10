@@ -1,11 +1,15 @@
 package com.ocrapp.startscreen;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -62,6 +66,10 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 			public void onClick(View v) {
 
 				Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+				
+				Uri uriSavedImage=Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "tesseract/camera/image.png"));
+				cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+				
 				if (cameraIntent.resolveActivity(getPackageManager()) != null) {
 					startActivityForResult(cameraIntent, 1);
 				}
