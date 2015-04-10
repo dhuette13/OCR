@@ -2,6 +2,7 @@ package com.ocrapp;
 
 import java.util.ArrayList;
 
+import startscreen.StartActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,6 +15,7 @@ import br.com.thinkti.android.filechooser.FileChooser;
 
 import com.ocrapp.imageui.ImagePreprocessor;
 
+
 public class MainActivity extends Activity {
 	private static final String TESSBASE_PATH = Environment.getExternalStorageDirectory().getPath() + "/tesseract/";
 	private static final String DEFAULT_LANGUAGE = "eng";
@@ -24,31 +26,11 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		Intent startScreen= new Intent(this, StartActivity.class);
+		startActivity(startScreen);
+
 		
-		
-		textView = (EditText) findViewById(R.id.editText1);
-//		Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//		startActivityForResult(cameraIntent, 0);
-		
-		Intent intent = new Intent(this, FileChooser.class);
-		ArrayList<String> extensions = new ArrayList<String>();
-		extensions.add(".jpg");
-		extensions.add(".bmp");
-		extensions.add(".png");
-		intent.putStringArrayListExtra("filterFileExtension", extensions);
-		startActivityForResult(intent, 1);
-		
-		
-//		final String inputText = "Test text";
-//		final Bitmap bmp = getTextImage(inputText, 640, 480);
-//		final TessBaseAPI baseApi = new TessBaseAPI();
-//		baseApi.init(TESSBASE_PATH, DEFAULT_LANGUAGE);
-//		baseApi.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SINGLE_LINE);
-//		baseApi.setImage(bmp);
-//		String text = baseApi.getUTF8Text();
-//		
-//		textView.setText(text);
-//		baseApi.end();
 	}
 	
 	@Override
