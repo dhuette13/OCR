@@ -1,16 +1,13 @@
 package com.ocrapp;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Paint.Align;
-import android.graphics.Paint.Style;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
@@ -19,7 +16,6 @@ import android.widget.EditText;
 import br.com.thinkti.android.filechooser.FileChooser;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
-import com.ocrapp.imageui.ImagePreprocessor;
 
 public class MainActivity extends Activity {
 	private static final String TESSBASE_PATH = Environment.getExternalStorageDirectory().getPath() + "/tesseract/";
@@ -32,21 +28,8 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-//		textView = (EditText) findViewById(R.id.editText1);
-
-//		final String inputText = "Test text";
-//		final Bitmap bmp = getTextImage(inputText, 640, 480);
-
-//		final TessBaseAPI baseApi = new TessBaseAPI();
-//		baseApi.init(TESSBASE_PATH, DEFAULT_LANGUAGE);
-//		baseApi.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SINGLE_LINE);
-//		baseApi.setImage(bmp);
-//		String text = baseApi.getUTF8Text();
 		
-//		textView.setText(text);
-		
-//		baseApi.end();
-		
+		textView = (EditText) findViewById(R.id.editText1);
 //		Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 //		startActivityForResult(cameraIntent, 0);
 		
@@ -57,6 +40,18 @@ public class MainActivity extends Activity {
 		extensions.add(".png");
 		intent.putStringArrayListExtra("filterFileExtension", extensions);
 		startActivityForResult(intent, 1);
+		
+		
+//		final String inputText = "Test text";
+//		final Bitmap bmp = getTextImage(inputText, 640, 480);
+//		final TessBaseAPI baseApi = new TessBaseAPI();
+//		baseApi.init(TESSBASE_PATH, DEFAULT_LANGUAGE);
+//		baseApi.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SINGLE_LINE);
+//		baseApi.setImage(bmp);
+//		String text = baseApi.getUTF8Text();
+//		
+//		textView.setText(text);
+//		baseApi.end();
 	}
 	
 	@Override
@@ -84,35 +79,35 @@ public class MainActivity extends Activity {
 	    	Bitmap bmp = null;
 	        String fileSelected = data.getStringExtra("fileSelected");
 	        System.out.println("SELECTED FILE: " + fileSelected);
-	        
-	        Intent imagePreprocessor = new Intent(this, ImagePreprocessor.class);
-	        imagePreprocessor.putExtra("file", fileSelected);
-	        startActivity(imagePreprocessor);
-	        
-//	        BitmapFactory.Options options = new BitmapFactory.Options();
-//	        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-//	        try {
-//	            bmp = BitmapFactory.decodeStream(new FileInputStream(fileSelected), null, options);
-//	        } catch (FileNotFoundException e) {
-//	            e.printStackTrace();
-//	        }
-//	        bmp = BitmapFactory.decodeFile(fileSelected, options);
 //	        
-//	        if(bmp != null){
-//	        	textView.setText("Initializing Tesesseract...");
-//	        	final TessBaseAPI baseApi = new TessBaseAPI();
-//	        	baseApi.init(TESSBASE_PATH, DEFAULT_LANGUAGE);
-//	        	baseApi.setPageSegMode(TessBaseAPI.PageSegMode.PSM_AUTO);
-//	        	baseApi.setImage(bmp);
-//	        	String text = baseApi.getUTF8Text();
-//	        	System.out.println(text);
-//	        	textView.append(text);
-//	        	
-//	        	baseApi.end();
-//	        }
-//	        else {
-//	        	textView.setText("Error reading image file: " + fileSelected);
-//	        }
+//	        Intent imagePreprocessor = new Intent(this, ImagePreprocessor.class);
+//	        imagePreprocessor.putExtra("file", fileSelected);
+//	        startActivity(imagePreprocessor);
+	        
+	        BitmapFactory.Options options = new BitmapFactory.Options();
+	        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+	        try {
+	            bmp = BitmapFactory.decodeStream(new FileInputStream(fileSelected), null, options);
+	        } catch (FileNotFoundException e) {
+	            e.printStackTrace();
+	        }
+	        bmp = BitmapFactory.decodeFile(fileSelected, options);
+	        
+	        if(bmp != null){
+	        	textView.setText("Initializing Tesesseract...");
+	        	final TessBaseAPI baseApi = new TessBaseAPI();
+	        	baseApi.init(TESSBASE_PATH, DEFAULT_LANGUAGE);
+	        	baseApi.setPageSegMode(TessBaseAPI.PageSegMode.PSM_AUTO);
+	        	baseApi.setImage(bmp);
+	        	String text = baseApi.getUTF8Text();
+	        	System.out.println(text);
+	        	textView.append(text);
+	        	
+	        	baseApi.end();
+	        }
+	        else {
+	        	textView.setText("Error reading image file: " + fileSelected);
+	        }
 	    }            
 	}
 }

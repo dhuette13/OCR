@@ -5,8 +5,11 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.ocrapp.R;
@@ -68,11 +71,13 @@ public class ImagePreprocessor extends Activity {
 //		super.onCreateContextMenu(menu, v, menuInfo);
 //		getMenuInflater().inflate(R.menu.image_preprocessor_menu, menu);
 //	}
-	
+//	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
+		super.onCreateOptionsMenu(menu);
 		getMenuInflater().inflate(R.menu.image_preprocessor, menu);
+//		getMenuInflater().inflate(R.menu.image_preprocessor_menu, menu);
 		return true;
 	}
 
