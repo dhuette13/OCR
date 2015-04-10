@@ -1,29 +1,34 @@
 package com.ocrapp;
 
-import com.googlecode.tesseract.android.TessBaseAPI;
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
-import android.graphics.Bitmap;
-import android.os.Environment;
+public class Conversion extends Activity {
 
-public class Conversion {
-
-	private static final String TESSBASE_PATH = Environment.getExternalStorageDirectory().getPath() + "/tesseract/";
-	final String inputText = "Test text";
-	private static Bitmap bmp;
-	private static final String DEFAULT_LANGUAGE = "eng";
-	
-	public static void setImage(Bitmap i){
-		bmp = i;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_conversion);
 	}
-	
-	public static String convertBitmap(){
-		final TessBaseAPI baseApi = new TessBaseAPI();
-		baseApi.init(TESSBASE_PATH, DEFAULT_LANGUAGE);
-		baseApi.setPageSegMode(TessBaseAPI.PageSegMode.PSM_AUTO);
-		baseApi.setImage(bmp);
-		String text = baseApi.getUTF8Text();
-		
-		return text;
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.conversion, menu);
+		return true;
 	}
-	
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 }

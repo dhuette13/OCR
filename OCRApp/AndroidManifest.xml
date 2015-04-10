@@ -23,13 +23,17 @@
             android:label="@string/title_activity_image_preprocessor" >
         </activity>
         <activity
-            android:name="com.ocrapp.startscreen.StartActivity"
+            android:name=".startscreen.StartActivity"
             android:label="@string/title_activity_start" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".Conversion"
+            android:label="@string/title_activity_conversion" >
         </activity>
     </application>
 

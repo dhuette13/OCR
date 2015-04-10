@@ -14,7 +14,7 @@
     <string name="title_activity_image_preprocessor">ImagePreprocessor</string>
     <string name="title_activity_start">StartActivity</string>
     <string name="Glypthic">Glyphtic</string>
-    
+
     <string-array name="lang_array">
         <item>English</item>
         <item>Spanish</item>
@@ -25,5 +25,7 @@
         <item>Simplified Chinese</item>
         <item>German</item>
     </string-array>
+
+    <string name="title_activity_conversion">Conversion</string>
 
 </resources>
