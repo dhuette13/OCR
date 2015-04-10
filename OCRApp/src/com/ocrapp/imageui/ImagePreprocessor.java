@@ -17,6 +17,7 @@ import com.ocrapp.R;
 public class ImagePreprocessor extends Activity {
 
 	Bitmap imageBitmap;
+	Bitmap oldBitmap;
 	Crop crop;
 	Flip flip;
 	
@@ -91,6 +92,7 @@ public class ImagePreprocessor extends Activity {
 			return true;
 		}
 		else if(id == R.id.crop) {
+			oldBitmap = imageBitmap;
 			System.out.println("CROPPING IMAGE");
 			DisplayMetrics displaymetrics = new DisplayMetrics();
 			getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
@@ -102,15 +104,22 @@ public class ImagePreprocessor extends Activity {
 			imageView.setImageBitmap(imageBitmap);
 		}
 		else if(id == R.id.rotate_left){
+			oldBitmap = imageBitmap;
 			System.out.println("ROTATING IMAGE LEFT");
 			Flip.setImage(imageBitmap);
 			imageBitmap = Flip.rotateBitmap(-90);
 			imageView.setImageBitmap(imageBitmap);
 		}
 		else if(id == R.id.rotate_right){
+			oldBitmap = imageBitmap;
 			System.out.println("ROTATING IMAGE RIGHT");
 			Flip.setImage(imageBitmap);
 			imageBitmap = Flip.rotateBitmap(90);
+			imageView.setImageBitmap(imageBitmap);
+		}
+		else if(id == R.id.undo){
+			imageBitmap = oldBitmap;
+			System.out.println("UNDOING");
 			imageView.setImageBitmap(imageBitmap);
 		}
 		return super.onOptionsItemSelected(item);

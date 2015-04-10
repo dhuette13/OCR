@@ -1,13 +1,10 @@
 package com.ocrapp;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
@@ -15,7 +12,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import br.com.thinkti.android.filechooser.FileChooser;
 
-import com.googlecode.tesseract.android.TessBaseAPI;
+import com.ocrapp.imageui.ImagePreprocessor;
 
 public class MainActivity extends Activity {
 	private static final String TESSBASE_PATH = Environment.getExternalStorageDirectory().getPath() + "/tesseract/";
@@ -80,34 +77,34 @@ public class MainActivity extends Activity {
 	        String fileSelected = data.getStringExtra("fileSelected");
 	        System.out.println("SELECTED FILE: " + fileSelected);
 //	        
-//	        Intent imagePreprocessor = new Intent(this, ImagePreprocessor.class);
-//	        imagePreprocessor.putExtra("file", fileSelected);
-//	        startActivity(imagePreprocessor);
+	        Intent imagePreprocessor = new Intent(this, ImagePreprocessor.class);
+	        imagePreprocessor.putExtra("file", fileSelected);
+	        startActivity(imagePreprocessor);
 	        
-	        BitmapFactory.Options options = new BitmapFactory.Options();
-	        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-	        try {
-	            bmp = BitmapFactory.decodeStream(new FileInputStream(fileSelected), null, options);
-	        } catch (FileNotFoundException e) {
-	            e.printStackTrace();
-	        }
-	        bmp = BitmapFactory.decodeFile(fileSelected, options);
-	        
-	        if(bmp != null){
-	        	textView.setText("Initializing Tesesseract...");
-	        	final TessBaseAPI baseApi = new TessBaseAPI();
-	        	baseApi.init(TESSBASE_PATH, DEFAULT_LANGUAGE);
-	        	baseApi.setPageSegMode(TessBaseAPI.PageSegMode.PSM_AUTO);
-	        	baseApi.setImage(bmp);
-	        	String text = baseApi.getUTF8Text();
-	        	System.out.println(text);
-	        	textView.append(text);
-	        	
-	        	baseApi.end();
-	        }
-	        else {
-	        	textView.setText("Error reading image file: " + fileSelected);
-	        }
+//	        BitmapFactory.Options options = new BitmapFactory.Options();
+//	        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+//	        try {
+//	            bmp = BitmapFactory.decodeStream(new FileInputStream(fileSelected), null, options);
+//	        } catch (FileNotFoundException e) {
+//	            e.printStackTrace();
+//	        }
+//	        bmp = BitmapFactory.decodeFile(fileSelected, options);
+//	        
+//	        if(bmp != null){
+//	        	textView.setText("Initializing Tesesseract...");
+//	        	final TessBaseAPI baseApi = new TessBaseAPI();
+//	        	baseApi.init(TESSBASE_PATH, DEFAULT_LANGUAGE);
+//	        	baseApi.setPageSegMode(TessBaseAPI.PageSegMode.PSM_AUTO);
+//	        	baseApi.setImage(bmp);
+//	        	String text = baseApi.getUTF8Text();
+//	        	System.out.println(text);
+//	        	textView.append(text);
+//	        	
+//	        	baseApi.end();
+//	        }
+//	        else {
+//	        	textView.setText("Error reading image file: " + fileSelected);
+//	        }
 	    }            
 	}
 }
