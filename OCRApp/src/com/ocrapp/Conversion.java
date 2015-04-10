@@ -12,30 +12,56 @@
 
 package com.ocrapp;
 
-import com.googlecode.tesseract.android.TessBaseAPI;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ProgressBar;
+
+import com.googlecode.tesseract.android.TessBaseAPI;
 
 public class Conversion extends Activity {
 
+	// Progress Bar Variables
+	private static final int PROGRESS = 0x1;
+	private ProgressBar mProgress;
+	private int mProgressStatus = 0;
+	private Handler mHandler = new Handler();
+	
+	// Conversion Variables
 	final TessBaseAPI baseAPI = new TessBaseAPI();
 	String TESSBASE_PATH = Environment.getExternalStorageDirectory().getPath() + "/tesseract/";
-	
-	Bitmap newBitmap;
+	Bitmap newBitmap; 
 	String DEFAULT_LANGUAGE; 
-	Bundle extras;
-	String text;
+	Bundle extras; 
+	String text; 
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_conversion);
+		
+		mProgress = (ProgressBar) findViewByID(R.id.progress_bar);
+		
+		/*new Thread(new Runnable() {
+            public void run() {
+                while (mProgressStatus < 100) {
+                    mProgressStatus = doWork();
+
+                    // Update the progress bar
+                    mHandler.post(new Runnable() {
+                        public void run() {
+                            mProgress.setProgress(mProgressStatus);
+                        }
+                    });
+                }
+            }
+        }).start();*/ // thread example for progress bar
+		
 		
 		Intent intent = getIntent();
 		newBitmap = (Bitmap) intent.getParcelableExtra("image");
@@ -55,7 +81,7 @@ public class Conversion extends Activity {
 		baseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SINGLE_LINE);
 		baseAPI.setImage(newBitmap);
 		text = baseAPI.getUTF8Text();
-		// return text 
+		// return text for text preview
 	}
 
 	@Override
