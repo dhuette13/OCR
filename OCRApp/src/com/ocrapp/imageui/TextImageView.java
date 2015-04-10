@@ -27,7 +27,7 @@ public class TextImageView extends ImageView {
 	}
 	
 	private void setPaintOptions(){
-		paint.setColor(Color.GREEN);
+		paint.setColor(Color.BLACK);
 		paint.setAlpha(70);
 		paint.setStyle(Paint.Style.STROKE);
 		paint.setStrokeJoin(Paint.Join.ROUND);

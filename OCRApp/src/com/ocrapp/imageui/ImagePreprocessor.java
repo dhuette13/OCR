@@ -60,7 +60,6 @@ public class ImagePreprocessor extends Activity {
 		node2.setOnTouchListener(touchListener2);
 		node3.setOnTouchListener(touchListener3);
 		node4.setOnTouchListener(touchListener4);
-		
         
 		/* Get passed file selected, read to bitmap, and place on image preview */
 		String fileSelected = (String) this.getIntent().getExtras().get("file");
@@ -135,7 +134,6 @@ public class ImagePreprocessor extends Activity {
 		}
 		else if(id == R.id.OK){
 			Intent i = new Intent(this, Conversion.class);
-			Bundle b = new Bundle();
 			i.putExtra("lang", lang);
 			i.putExtra("image", imageBitmap);
 			startActivity(i);
