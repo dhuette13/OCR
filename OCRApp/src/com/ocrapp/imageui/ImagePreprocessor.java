@@ -2,8 +2,9 @@ package com.ocrapp.imageui;
 
 import java.util.ArrayList;
 
-import android.app.ActionBar;
+import startscreen.StartActivity;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -12,11 +13,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 
+import com.ocrapp.Conversion;
 import com.ocrapp.R;
 
 public class ImagePreprocessor extends Activity {
 
 	Bitmap imageBitmap;
+	String lang;
 	ArrayList <Bitmap>history;
 	Crop crop;
 	Flip flip;
@@ -61,6 +64,7 @@ public class ImagePreprocessor extends Activity {
         
 		/* Get passed file selected, read to bitmap, and place on image preview */
 		String fileSelected = (String) this.getIntent().getExtras().get("file");
+		lang = (String) this.getIntent().getExtras().get("lang");
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
         imageBitmap = BitmapFactory.decodeFile(fileSelected, options);
@@ -126,10 +130,15 @@ public class ImagePreprocessor extends Activity {
 			}
 		}
 		else if(id == R.id.cancel){
-			
+			Intent i = new Intent(this, StartActivity.class);
+			startActivity(i);
 		}
 		else if(id == R.id.OK){
-			
+			Intent i = new Intent(this, Conversion.class);
+			Bundle b = new Bundle();
+			i.putExtra("lang", lang);
+			i.putExtra("image", imageBitmap);
+			startActivity(i);
 		}
 		return super.onOptionsItemSelected(item);
 	}
