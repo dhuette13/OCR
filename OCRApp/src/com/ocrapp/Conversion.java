@@ -20,6 +20,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ProgressBar;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
@@ -45,9 +46,13 @@ public class Conversion extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_conversion);
 		
-		//mProgress = (ProgressBar) findViewByID(R.id.progress_bar);
+		//mProgress = (ProgressBar) findViewById(R.id.progressBar1);
 		//mProgress.setVisibility(View.VISIBLE);
 		
+		// Starting Progress Bar
+		//mProgress.setIndeterminate(true);
+		
+		// Still need to change the thread to go with the indeterminate progress bar -> no need for a while loop
 		/*new Thread(new Runnable() {
             public void run() {
                 while (mProgressStatus < 100) {
@@ -60,10 +65,12 @@ public class Conversion extends Activity {
                         }
                     });
                 }
+                
+                mProgress.setVisibility(View.GONE);
             }
         }).start();*/ // thread example for progress bar
 		
-		
+
 		Intent intent = getIntent();
 		newBitmap = (Bitmap) intent.getParcelableExtra("image");
 		
@@ -78,13 +85,20 @@ public class Conversion extends Activity {
 			DEFAULT_LANGUAGE= (String) savedInstanceState.getSerializable("lang");
 		}
 		
+		
+		baseAPI.setDebug(true);
 		baseAPI.init(TESSBASE_PATH, DEFAULT_LANGUAGE);
 		baseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SINGLE_LINE);
 		baseAPI.setImage(newBitmap);
 		text = baseAPI.getUTF8Text();
+		baseAPI.end();
+		
 		
 		System.out.println(text);
 		// return text for text preview
+		
+		// Pull progress bar out manually
+		// mProgress.setVisibility(View.GONE);
 	}
 
 	@Override
