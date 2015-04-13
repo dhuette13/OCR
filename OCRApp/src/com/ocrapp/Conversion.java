@@ -12,6 +12,10 @@
 
 package com.ocrapp;
 
+import java.io.File;
+import java.io.FileOutputStream;
+
+import savetoformat.SaveFormatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -22,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
 
@@ -95,6 +100,7 @@ public class Conversion extends Activity {
 		
 		
 		System.out.println(text);
+		
 		// return text for text preview
 		
 		// Pull progress bar out manually
@@ -118,5 +124,12 @@ public class Conversion extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	public void todoOnclick(View view){
+		Intent i = new Intent(this, SaveFormatActivity.class);
+		i.putExtra("item", text);
+		startActivity(i);
+	//	finish();
+
 	}
 }

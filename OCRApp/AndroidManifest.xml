@@ -30,10 +30,19 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            
         </activity>
         <activity
             android:name=".Conversion"
             android:label="@string/title_activity_conversion" >
+        </activity>
+        <activity
+            android:name="savetoformat.SaveFormatActivity"
+            android:label="SaveFormat" >
+                    </activity>
+        <activity
+            android:name="savetoformat.Help"
+            android:label="@string/title_activity_help" >
         </activity>
     </application>
 
