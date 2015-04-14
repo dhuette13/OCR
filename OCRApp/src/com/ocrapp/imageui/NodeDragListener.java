@@ -22,9 +22,9 @@ public class NodeDragListener implements OnDragListener {
 	}
 
 	public void updateNodes(){
-		target.updateNode(1, node1.getX() + nodeXOffset, node1.getY() + nodeYOffset);
-		target.updateNode(2, node2.getX() + nodeXOffset, node2.getY() + nodeYOffset);
-		target.updateNode(3, node3.getX() + nodeXOffset, node3.getY() + nodeYOffset);
+		target.updateNode(1, node1.getX(), node1.getY());
+		target.updateNode(2, node2.getX() + nodeXOffset, node2.getY());
+		target.updateNode(3, node3.getX(), node3.getY() + nodeYOffset);
 		target.updateNode(4, node4.getX() + nodeXOffset, node4.getY() + nodeYOffset);
 		target.invalidate();
 	}
@@ -32,8 +32,8 @@ public class NodeDragListener implements OnDragListener {
 	@Override
 	public boolean onDrag(View view, DragEvent event) {
 		System.out.println("UPDATING NODE OFFSETS: " + node1.getWidth() + " " + node1.getHeight());
-		nodeXOffset= node1.getWidth() / 2;
-		nodeYOffset = node1.getHeight() / 2;
+		nodeXOffset= node1.getWidth();
+		nodeYOffset = node1.getHeight();
 		switch (event.getAction()) {
 		case DragEvent.ACTION_DRAG_ENTERED:
 			System.out.println("DRAG ENTERED: " + event.getX() + ", " + event.getY());
@@ -51,9 +51,9 @@ public class NodeDragListener implements OnDragListener {
 				node2.setY(y);
 				node3.setX(x);
 				updateNodes();
-				target.updateNode(1, x + nodeXOffset, y + nodeYOffset);
-				//				dragged.setX(x + nodeXOffset);
-				//				dragged.setY(y + nodeYOffset);
+				dragged.setX(x);
+				dragged.setY(y);
+				target.updateNode(1, x, y);
 				//			node2.setX(node2.getX() - nodeXOffset);
 				//			node3.setY(node3.getY() - nodeYOffset);
 				//				node2.setY(y - nodeYOffset);
@@ -66,18 +66,24 @@ public class NodeDragListener implements OnDragListener {
 				node1.setY(y);
 				node4.setX(x);
 				updateNodes();
-				target.updateNode(2, x + nodeXOffset, y + nodeYOffset);
+				dragged.setX(x + nodeXOffset);
+				dragged.setY(y);
+				target.updateNode(2, x + nodeXOffset, y);
 			}
 			else if(dragged == node3){
 				node4.setY(y);
 				node1.setX(x);
 				updateNodes();
-				target.updateNode(3, x + nodeXOffset, y + nodeYOffset);
+				dragged.setX(x);
+				dragged.setY(y + nodeYOffset);
+				target.updateNode(3, x, y + nodeYOffset);
 			}
 			else if(dragged == node4){
 				node3.setY(y);
 				node2.setX(x);
 				updateNodes();
+				dragged.setX(x + nodeXOffset);
+				dragged.setY(y + nodeYOffset);
 				target.updateNode(4, x + nodeXOffset, y + nodeYOffset);
 			}
 			else{

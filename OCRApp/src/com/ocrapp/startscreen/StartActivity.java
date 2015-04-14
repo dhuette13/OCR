@@ -128,7 +128,7 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 		lang = (String) spinner.getSelectedItem();
 
 		if(lang.equals("English")){
-			lang = "en";
+			lang = "eng";
 		}
 		else if(lang.equals("Spanish"))
 			lang = "spa";

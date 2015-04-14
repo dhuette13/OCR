@@ -28,6 +28,7 @@
     </string-array>
 
     <string name="title_activity_conversion">Conversion</string>
+    <string name="title_activity_text_preview">TextPreview</string>
     <string name="title_activity_help">Help</string>
 
 </resources>
