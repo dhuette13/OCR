@@ -41,6 +41,14 @@
             android:name=".TextPreview"
             android:label="@string/title_activity_text_preview" >
         </activity>
+        <activity
+            android:name="savetoformat.SaveFormatActivity"
+            android:label="SaveFormat" >
+        </activity>
+        <activity
+            android:name="savetoformat.Help"
+            android:label="@string/title_activity_help" >
+        </activity>
     </application>
 
 </manifest>

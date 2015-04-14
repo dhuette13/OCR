@@ -47,18 +47,6 @@ public class Conversion extends Activity {
 		setContentView(R.layout.activity_conversion);
 
 		dialog = new ProgressDialog(this);
-		if (savedInstanceState == null) {
-			extras = getIntent().getExtras();
-			if(extras == null) {
-				DEFAULT_LANGUAGE = null;
-			} else {
-				DEFAULT_LANGUAGE = extras.getString("lang");
-			}
-		} else {
-			DEFAULT_LANGUAGE= (String) savedInstanceState.getSerializable("lang");
-			System.out.println("DEFAULT LANGUAGE: " + DEFAULT_LANGUAGE);
-		}
-
 		dialog.setIndeterminate(true);
 		dialog.setCancelable(true);
 		dialog.show();
