@@ -4,8 +4,15 @@ import java.io.File;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Point;
+import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -18,6 +25,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
 import android.widget.TextView;
 import br.com.thinkti.android.filechooser.FileChooser;
@@ -31,8 +40,12 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 	Spinner spinner;
 	Button uploadbtn;
 	Button camerabtn;
+	Button helpbtn;
 	TextView tvOut;
 	Intent intent;
+
+	Point p;
+	
 
 
 	@Override
@@ -40,6 +53,11 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start);
 
+		TextView myTextView=(TextView)findViewById(R.id.textview1);
+		Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Dosis-Bold.ttf");
+		myTextView.setTypeface(typeFace);
+		
+		
 		/** Upload Button ***/
 		intent = new Intent(this, FileChooser.class);
 		uploadbtn = (Button) findViewById(R.id.button2);
@@ -77,8 +95,22 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 		};
 		camerabtn.setOnClickListener(oclBtnCAM);
 
+		
+		/** Help Button ***/
+		 helpbtn = (Button) findViewById(R.id.button3);
+		 OnClickListener oclBtnHELP = new OnClickListener() {
+		       @Override
+		       public void onClick(View v) {
+		         // TODO Auto-generated method stub
 
+		    	   if (p != null)
+		    	       showPopup(StartActivity.this, p);
+		       }
+		     };
+		helpbtn.setOnClickListener(oclBtnHELP);
 
+		
+		/** Spinner **/
 		spinner = (Spinner) findViewById(R.id.spinner);
 		// Create an ArrayAdapter using the string array and a default spinner layout
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.lang_array, android.R.layout.simple_spinner_item);
@@ -126,7 +158,7 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.start, menu);
+		
 		return true;
 	}
 
@@ -154,6 +186,61 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 			startActivity(imagePreprocessor);
 
 		}            
+	}
+	// Next two methods are for help button popup
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+	 
+	   int[] location = new int[2];
+	   Button button = (Button) findViewById(R.id.button3);
+	 
+	   // Get the x, y location and store it in the location[] array
+	   // location[0] = x, location[1] = y.
+	   button.getLocationOnScreen(location);
+	 
+	   //Initialize the Point with x, and y positions
+	   p = new Point();
+	   p.x = location[0];
+	   p.y = location[1];
+	}
+	 
+	// The method that displays the popup.
+	private void showPopup(final Activity context, Point p) {
+	   int popupWidth = 1000;
+	   int popupHeight = 750;
+	 
+	   // Inflate the popup_layout.xml
+	   LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.popup);
+	   LayoutInflater layoutInflater = (LayoutInflater) context
+	     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	   View layout = layoutInflater.inflate(R.layout.popup_layout, viewGroup);
+	 
+	   // Creating the PopupWindow
+	   final PopupWindow popup = new PopupWindow(context);
+	   popup.setContentView(layout);
+	   popup.setWidth(popupWidth);
+	   popup.setHeight(popupHeight);
+	   popup.setFocusable(true);
+	 
+	   // Some offset to align the popup a bit to the right, and a bit down, relative to button's position.
+	   int OFFSET_X = 60;
+	   int OFFSET_Y = 70;
+	 
+	   // Clear the default translucent background
+	   popup.setBackgroundDrawable(new BitmapDrawable());
+	 
+	   // Displaying the popup at the specified location, + offsets.
+	   popup.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y + OFFSET_Y);
+	 
+	   // Getting a reference to Close button, and close the popup when clicked.
+	   Button close = (Button) layout.findViewById(R.id.close);
+	   close.setOnClickListener(new OnClickListener() {
+	 
+	     @Override
+	     public void onClick(View v) {
+	       popup.dismiss();
+	     }
+	   });
 	}
 
 }
