@@ -12,49 +12,74 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/button1"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="75dp"
+        android:layout_marginTop="9dp"
+        android:background="#137DCC"
         android:text="Upload"
+        android:textColor="@android:color/white"
+        android:textSize="22sp"
+        android:textStyle="bold"
         android:width="200dp" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button2"
-        android:layout_alignLeft="@+id/button2"
-        android:text="Camera"
-        android:width="200dp" />
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="17dp"
-        android:entries="@array/lang_array"
-        android:padding="20dp" />
+    
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/button2"
+            android:layout_below="@+id/spinner"
+            android:layout_marginTop="24dp"
+            android:background="#137DCC"
+            android:text="Camera"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:width="200dp" />
 
     <TextView
         android:id="@+id/textview1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/button3"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="9dp"
         android:text="@string/Glypthic"
         android:textSize="40sp" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:entries="@array/lang_array"
+        android:padding="10dp" />
 
     <Button
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="12dp"
-        android:layout_marginTop="10dp"
-        android:text="Button" />
+        android:layout_marginLeft="14dp"
+        android:layout_marginTop="11dp"
+        android:layout_toRightOf="@+id/button1"
+        android:background="@drawable/round_button"
+        android:minHeight="35dp"
+        android:minWidth="35dp"
+        android:text="@string/help"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textview1"
+        android:layout_centerHorizontal="true"
+        android:minHeight="130dp"
+        android:minWidth="130dp"
+        android:src="@drawable/logo" />
 
 </RelativeLayout>
+

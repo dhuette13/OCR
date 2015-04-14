@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/popup"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/popup_bg"
+    android:orientation="vertical"
+    android:padding="40dp" >
+ 
+<TextView
+   android:id="@+id/textView1"
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content"
+   android:text="Help"
+   android:textColor="@android:color/black"
+   android:textAppearance="?android:attr/textAppearanceMedium" />
+ 
+<TextView
+   android:id="@+id/textView2"
+   android:layout_marginTop="5dp"
+   android:layout_width="wrap_content"
+   android:layout_height="wrap_content"
+   android:textColor="@android:color/black"
+   android:text="Glyphtic allows you to select the language your text is based on or you can leave the default set to English, To initialize the process, you can either select an image or capture a photo with your camera." />
+ 
+<Button
+    android:id="@+id/close"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="10dp"
+    android:background="@android:color/white"
+    android:minHeight="38dp"
+    android:minWidth="54dp"
+    android:text="Close"
+    android:textColor="@android:color/black"
+    android:textSize="15sp" />
+ 
+</LinearLayout>
