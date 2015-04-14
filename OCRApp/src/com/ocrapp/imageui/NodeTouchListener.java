@@ -25,8 +25,8 @@ public class NodeTouchListener implements OnTouchListener {
 		if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
 
 			ClipData data = ClipData.newPlainText("", "");
-			NodeDragShadow shadowBuilder = new NodeDragShadow(view);
-			shadowBuilder.onProvideShadowMetrics(new Point(view.getWidth(), view.getHeight()), new Point(0, 0));
+			//			DragShadowBuilder shadowBuilder = new DragShadowBuilder(view);
+			NodeDragShadow shadowBuilder = new NodeDragShadow(view, nodeNumber);
 			System.out.println("ACTION DOWN");
 			view.startDrag(data, shadowBuilder, view, 0);
 			view.setVisibility(View.INVISIBLE);
@@ -38,11 +38,44 @@ public class NodeTouchListener implements OnTouchListener {
 		}
 
 	}
-	
-	class NodeDragShadow extends DragShadowBuilder {
+
+	class NodeDragShadow extends View.DragShadowBuilder {
+
+		int dragPointX, dragPointY;
 		
-		public NodeDragShadow(View view){
+		public NodeDragShadow(View view, int nodeNumber){
 			super(view);
+
+			switch(nodeNumber){
+			case 1:
+				System.out.println("Shadow BUilder case 1");
+				dragPointX = 0;
+				dragPointY = 0;
+				break;
+
+			case 2:
+				System.out.println("Shadow BUilder case 2");
+				dragPointX = 0;
+				dragPointY = 0;
+				break;
+
+			case 3:
+				System.out.println("Shadow BUilder case 3");
+				dragPointX = 0;
+				dragPointY = 0;
+				break;
+
+			case 4:
+				System.out.println("Shadow BUilder case 4");
+				dragPointX = 0;
+				dragPointY = 0;
+				break;
+			default:
+				System.out.println("Shadow BUilder case default");
+				dragPointX = view.getWidth();
+				dragPointY = view.getHeight();
+
+			}
 		}
 
 		@Override
@@ -53,12 +86,13 @@ public class NodeTouchListener implements OnTouchListener {
 		@Override
 		public void onProvideShadowMetrics (Point shadowSize, Point shadowTouchPoint){
 			View v = getView();
-			
+
 			int height = (int) v.getHeight();
 			int width = (int) v.getWidth();
-			
+
 			shadowSize.set(width, height);
-			shadowTouchPoint.set(0, 0);
+			System.out.println("DRAG POINT SET TO: " + dragPointX + " " + dragPointY);
+			shadowTouchPoint.set(dragPointX, dragPointY);
 		}
 	}
 }

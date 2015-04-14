@@ -8,14 +8,14 @@ import com.googlecode.leptonica.android.Rotate;
 import com.googlecode.leptonica.android.WriteFile;
 
 public class Flip {
-	private static Bitmap image;
+	private Bitmap image;
 	
 	
-	public static void setImage(Bitmap i){
+	public void setImage(Bitmap i){
 		image = i;
 	}
 
-	public static Bitmap rotateBitmap(float degrees){
+	public Bitmap rotateBitmap(float degrees){
 		
 		/* Read original bitmap file to Pix object */
 		Pix pix = ReadFile.readBitmap(image);
