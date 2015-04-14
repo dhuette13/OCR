@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
@@ -43,6 +44,7 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 	TextView tvOut;
 	Intent intent;
 
+	boolean isCamera = false;
 	Point p;
 	
 
@@ -81,10 +83,10 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 		OnClickListener oclBtnCAM = new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
+				isCamera = true;
 				Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 				
-				Uri uriSavedImage=Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "tesseract/camera/image.png"));
+				Uri uriSavedImage = Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/tesseract/camera/image.png"));
 				cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
 				
 				if (cameraIntent.resolveActivity(getPackageManager()) != null) {
@@ -173,8 +175,9 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 		return super.onOptionsItemSelected(item);
 	}
 
+	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if ((requestCode == 1) && (resultCode == -1)) {
+		if ((requestCode == 1) && (resultCode == -1) && !isCamera) {
 			Bitmap bmp = null;
 			String fileSelected = data.getStringExtra("fileSelected");
 			System.out.println("SELECTED FILE: " + fileSelected);
@@ -184,7 +187,17 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 			imagePreprocessor.putExtra("lang", lang);
 			startActivity(imagePreprocessor);
 
-		}            
+		}
+		else if ((requestCode == 1) && (resultCode == -1) && isCamera) {
+//			String fileSelected = data.getStringExtra("fileSelected");
+//			System.out.println("SELECTED FILE: " + fileSelected);
+			
+			Intent imagePreprocessor = new Intent(this, ImagePreprocessor.class);
+			imagePreprocessor.putExtra("file", "/mnt/sdcard/tesseract/camera/image.png");
+			imagePreprocessor.putExtra("lang", lang);
+			startActivity(imagePreprocessor);
+			
+		}
 	}
 	// Next two methods are for help button popup
 	@Override
