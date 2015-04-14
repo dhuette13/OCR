@@ -7,7 +7,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
@@ -42,7 +41,7 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 	Button camerabtn;
 	Button helpbtn;
 	TextView tvOut;
-	Intent intent;
+	Intent intent;	
 
 	boolean isCamera = false;
 	Point p;
