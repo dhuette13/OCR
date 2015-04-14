@@ -55,22 +55,6 @@
         android:entries="@array/lang_array"
         android:padding="10dp" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="14dp"
-        android:layout_marginTop="11dp"
-        android:layout_toRightOf="@+id/button1"
-        android:background="@drawable/round_button"
-        android:minHeight="35dp"
-        android:minWidth="35dp"
-        android:text="@string/help"
-        android:textColor="@android:color/white"
-        android:textSize="12sp"
-        android:textStyle="bold" />
-
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
@@ -80,6 +64,22 @@
         android:minHeight="130dp"
         android:minWidth="130dp"
         android:src="@drawable/logo" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="22dp"
+        android:layout_marginTop="11dp"
+        android:background="@drawable/round_button"
+        android:minHeight="35dp"
+        android:minWidth="35dp"
+        android:text="@string/help"
+        android:textColor="@android:color/white"
+        android:textSize="12sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>
 
