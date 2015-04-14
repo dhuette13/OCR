@@ -1,5 +1,6 @@
 package com.ocrapp.startscreen;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -12,6 +13,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,52 +43,58 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 	Button helpbtn;
 	TextView tvOut;
 	Intent intent;
+
 	Point p;
 	
-	
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start);
-		
+
 		TextView myTextView=(TextView)findViewById(R.id.textview1);
 		Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Dosis-Bold.ttf");
 		myTextView.setTypeface(typeFace);
 		
 		
 		/** Upload Button ***/
-		 intent = new Intent(this, FileChooser.class);
-		 uploadbtn = (Button) findViewById(R.id.button2);
-		 OnClickListener oclBtnUP = new OnClickListener() {
-		       @Override
-		       public void onClick(View v) {
-		         // TODO Auto-generated method stub
+		intent = new Intent(this, FileChooser.class);
+		uploadbtn = (Button) findViewById(R.id.button2);
+		OnClickListener oclBtnUP = new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
 
-		    
-		   			ArrayList<String> extensions = new ArrayList<String>();
-		   			extensions.add(".jpg");
-		   			extensions.add(".bmp");
-		   			extensions.add(".png");
-		   			intent.putStringArrayListExtra("filterFileExtension", extensions);
-		   			startActivityForResult(intent, 1);
-		       }
-		     };
+
+				ArrayList<String> extensions = new ArrayList<String>();
+				extensions.add(".jpg");
+				extensions.add(".bmp");
+				extensions.add(".png");
+				intent.putStringArrayListExtra("filterFileExtension", extensions);
+				startActivityForResult(intent, 1);
+			}
+		};
 		uploadbtn.setOnClickListener(oclBtnUP);
-		
+
 		/* Camera Button*/
 		camerabtn = (Button) findViewById(R.id.button1);
-		 OnClickListener oclBtnCAM = new OnClickListener() {
-		       @Override
-		       public void onClick(View v) {
-		         // TODO Auto-generated method stub
-		   		
-		   		Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-		   		if (cameraIntent.resolveActivity(getPackageManager()) != null) {
-		   			startActivityForResult(cameraIntent, 1);
-		   		}
-		       }
-		     };
+		OnClickListener oclBtnCAM = new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+				Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+				
+				Uri uriSavedImage=Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "tesseract/camera/image.png"));
+				cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+				
+				if (cameraIntent.resolveActivity(getPackageManager()) != null) {
+					startActivityForResult(cameraIntent, 1);
+				}
+			}
+		};
 		camerabtn.setOnClickListener(oclBtnCAM);
+
 		
 		/** Help Button ***/
 		 helpbtn = (Button) findViewById(R.id.button3);
@@ -108,41 +119,41 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 		// Apply the adapter to the spinner
 		spinner.setAdapter(adapter);
 		spinner.setOnItemSelectedListener(this);
-		
-	}
-	
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        // An item was selected. You can retrieve the selected item using
-        // parent.getItemAtPosition(pos)
-    	 spinner.setSelection(pos);
-    	 lang = (String) spinner.getSelectedItem();
-    	 
-    	 if(lang.equals("English")){
-    		 lang = "en";
-    	 }
-    	 else if(lang.equals("Spanish"))
-    		 lang = "spa";
-    	 else if(lang.equals("French"))
-    		 lang = "fra";
-    	 else if(lang.equals("Hindi"))
-    		 lang = "hin";
-    	 else if(lang.equals("Arabic"))
-    		 lang = "ara";
-    	 else if(lang.equals("Portuguese"))
-    		 lang ="por";
-    	 else if(lang.equals("Simplified Chinese"))
-    		 lang = "chi_sim";
-    	 else if(lang.equals("German"))
-    		 lang ="deu";
-    	System.out.println(lang); 
-    	
-    }
 
-    public void onNothingSelected(AdapterView<?> parent) {
-        // Another interface callback
-    	lang = "en";
-    	 System.out.println(lang);
-    }
+	}
+
+	public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+		// An item was selected. You can retrieve the selected item using
+		// parent.getItemAtPosition(pos)
+		spinner.setSelection(pos);
+		lang = (String) spinner.getSelectedItem();
+
+		if(lang.equals("English")){
+			lang = "en";
+		}
+		else if(lang.equals("Spanish"))
+			lang = "spa";
+		else if(lang.equals("French"))
+			lang = "fra";
+		else if(lang.equals("Hindi"))
+			lang = "hin";
+		else if(lang.equals("Arabic"))
+			lang = "ara";
+		else if(lang.equals("Portuguese"))
+			lang ="por";
+		else if(lang.equals("Simplified Chinese"))
+			lang = "chi_sim";
+		else if(lang.equals("German"))
+			lang ="deu";
+		System.out.println(lang); 
+
+	}
+
+	public void onNothingSelected(AdapterView<?> parent) {
+		// Another interface callback
+		lang = "en";
+		System.out.println(lang);
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -162,43 +173,19 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-	    if ((requestCode == 1) && (resultCode == -1)) {
-	    	Bitmap bmp = null;
-	        String fileSelected = data.getStringExtra("fileSelected");
-	        System.out.println("SELECTED FILE: " + fileSelected);
-	        
-	        Intent imagePreprocessor = new Intent(this, ImagePreprocessor.class);
-	        imagePreprocessor.putExtra("file", fileSelected);
-	        imagePreprocessor.putExtra("lang", lang);
-	        startActivity(imagePreprocessor);
-	        
-//	        BitmapFactory.Options options = new BitmapFactory.Options();
-//	        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-//	        try {
-//	            bmp = BitmapFactory.decodeStream(new FileInputStream(fileSelected), null, options);
-//	        } catch (FileNotFoundException e) {
-//	            e.printStackTrace();
-//	        }
-//	        bmp = BitmapFactory.decodeFile(fileSelected, options);
-//	        
-//	        if(bmp != null){
-//	        	textView.setText("Initializing Tesesseract...");
-//	        	final TessBaseAPI baseApi = new TessBaseAPI();
-//	        	baseApi.init(TESSBASE_PATH, DEFAULT_LANGUAGE);
-//	        	baseApi.setPageSegMode(TessBaseAPI.PageSegMode.PSM_AUTO);
-//	        	baseApi.setImage(bmp);
-//	        	String text = baseApi.getUTF8Text();
-//	        	System.out.println(text);
-//	        	textView.append(text);
-//	        	
-//	        	baseApi.end();
-//	        }
-//	        else {
-//	        	textView.setText("Error reading image file: " + fileSelected);
-//	        }
-	    }            
+		if ((requestCode == 1) && (resultCode == -1)) {
+			Bitmap bmp = null;
+			String fileSelected = data.getStringExtra("fileSelected");
+			System.out.println("SELECTED FILE: " + fileSelected);
+
+			Intent imagePreprocessor = new Intent(this, ImagePreprocessor.class);
+			imagePreprocessor.putExtra("file", fileSelected);
+			imagePreprocessor.putExtra("lang", lang);
+			startActivity(imagePreprocessor);
+
+		}            
 	}
 	// Next two methods are for help button popup
 	@Override
