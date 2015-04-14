@@ -13,23 +13,17 @@
 package com.ocrapp;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ProgressBar;
 
 import com.googlecode.tesseract.android.TessBaseAPI;
 
 public class Conversion extends Activity {
-
-	// Progress Bar Variables
-	private ProgressBar mProgress;
 
 	// Conversion Variables
 	final TessBaseAPI baseAPI = new TessBaseAPI();
@@ -38,31 +32,36 @@ public class Conversion extends Activity {
 	String DEFAULT_LANGUAGE; 
 	Bundle extras; 
 	String text; 
-	ProgressDialog dialog;
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		System.out.println("In Conversion Activity");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_conversion);
+		
+		
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+		newBitmap = BitmapFactory.decodeFile(TESSBASE_PATH + "modimage.png", options);
 
-		dialog = new ProgressDialog(this);
-		dialog.setIndeterminate(true);
-		dialog.setCancelable(true);
-		dialog.show();
-		new ConversionTask().execute();
+		baseAPI.init(TESSBASE_PATH, DEFAULT_LANGUAGE);
+		baseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_AUTO);
+		baseAPI.setImage(newBitmap);
+
+		newBitmap.recycle();
+		text = baseAPI.getUTF8Text();
 
 
-		//		mProgress = (ProgressBar) findViewById(R.id.progressBar1);
-		//		mProgress.setVisibility(View.VISIBLE);
+		baseAPI.end();
 
-//		new Thread(new Runnable() {
-//			public void run() {
-//
-//		
-//
-//			}
-//		}).start(); // thread example for progress bar
+
+		System.out.println(text);
+
+		Intent i = new Intent(Conversion.this, TextPreview.class);
+		i.putExtra("text", text);
+		startActivity(i);
+
+
 
 	}
 
@@ -83,45 +82,5 @@ public class Conversion extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
-	}
-
-	private class ConversionTask extends AsyncTask<Void, Void, Void> {
-
-		@Override
-		protected Void doInBackground(Void... params) {
-			dialog.setTitle("Reading Image...");
-			BitmapFactory.Options options = new BitmapFactory.Options();
-			options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-			newBitmap = BitmapFactory.decodeFile(TESSBASE_PATH + "modimage.png", options);
-
-			dialog.setTitle("Converting...");
-			baseAPI.init(TESSBASE_PATH, DEFAULT_LANGUAGE);
-			baseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_AUTO);
-			baseAPI.setImage(newBitmap);
-
-			newBitmap.recycle();
-			text = baseAPI.getUTF8Text();
-
-
-			baseAPI.end();
-
-			dialog.dismiss();
-			//				mProgress.setVisibility(View.GONE);
-
-			System.out.println(text);
-
-			Intent i = new Intent(Conversion.this, TextPreview.class);
-			i.putExtra("text", text);
-			startActivity(i);
-			
-			return null;
-		}
-
-//		protected void onProgressUpdate(Integer... progress) {
-//		}
-//
-//		protected void onPostExecute(Long result) {
-//		}
-
 	}
 }
