@@ -29,7 +29,7 @@ public class Conversion extends Activity {
 	final TessBaseAPI baseAPI = new TessBaseAPI();
 	String TESSBASE_PATH = Environment.getExternalStorageDirectory().getPath() + "/tesseract/";
 	Bitmap newBitmap; 
-	String DEFAULT_LANGUAGE; 
+	String lang; 
 	Bundle extras; 
 	String text; 
 
@@ -39,30 +39,30 @@ public class Conversion extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_conversion);
 		
-		
-		BitmapFactory.Options options = new BitmapFactory.Options();
-		options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-		newBitmap = BitmapFactory.decodeFile(TESSBASE_PATH + "modimage.png", options);
-
-		baseAPI.init(TESSBASE_PATH, DEFAULT_LANGUAGE);
-		baseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_AUTO);
-		baseAPI.setImage(newBitmap);
-
-		newBitmap.recycle();
-		text = baseAPI.getUTF8Text();
-
-
-		baseAPI.end();
-
-
-		System.out.println(text);
-
-		Intent i = new Intent(Conversion.this, TextPreview.class);
-		i.putExtra("text", text);
-		startActivity(i);
-
-
-
+		new Thread(new Runnable(){
+			@Override
+			public void run() {
+				lang = (String) getIntent().getExtras().getString("lang");
+				BitmapFactory.Options options = new BitmapFactory.Options();
+				options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+				newBitmap = BitmapFactory.decodeFile(TESSBASE_PATH + "modimage.png", options);
+				
+				baseAPI.init(TESSBASE_PATH, lang);
+				baseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_AUTO);
+				baseAPI.setImage(newBitmap);
+				
+				newBitmap.recycle();
+				text = baseAPI.getUTF8Text();
+				
+				baseAPI.end();
+				
+				System.out.println(text);
+				
+				Intent i = new Intent(Conversion.this, TextPreview.class);
+				i.putExtra("text", text);
+				startActivity(i);
+			}
+		}).start();
 	}
 
 	@Override

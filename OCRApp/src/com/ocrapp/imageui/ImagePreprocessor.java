@@ -168,7 +168,6 @@ public class ImagePreprocessor extends Activity {
 			}
 			
 			imageBitmap.recycle();
-			System.gc();
 			startActivity(i);
 		}
 		else if(id == R.id.action_help){

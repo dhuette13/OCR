@@ -8,17 +8,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.ocrapp.Conversion" >
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="30dp"
-        android:text="okay!" 
-        android:onClick="todoOnclick"
-        />
-
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
@@ -35,9 +24,9 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="59dp"
-        android:minWidth="130dp"
         android:minHeight="130dp"
+        android:minWidth="130dp"
         android:scaleType="fitStart"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/logo" />
 
 </RelativeLayout>
