@@ -9,6 +9,7 @@ import com.ocrapp.R;
 import com.ocrapp.R.id;
 import com.ocrapp.R.layout;
 import com.ocrapp.R.menu;
+import com.ocrapp.startscreen.StartActivity;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -91,6 +92,13 @@ public class SaveFormatActivity extends Activity {
 		giveMessage.show();
 	}
 	
+	public void gotostart(MenuItem item){
+
+			Intent i = new Intent(this, StartActivity.class);
+			startActivity(i);
+			
+	} 
+		
 }
 
 
