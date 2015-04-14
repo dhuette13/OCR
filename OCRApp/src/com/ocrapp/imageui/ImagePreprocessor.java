@@ -20,24 +20,27 @@ import com.ocrapp.startscreen.StartActivity;
 
 public class ImagePreprocessor extends Activity {
 
-	Bitmap imageBitmap;
-	Bitmap oldBitmap = null;
-	String lang;
-	Crop crop;
-	Flip flip;
+	private Bitmap imageBitmap;
+	private Bitmap oldBitmap = null;
+	private String lang;
+	private Crop crop;
+	private Flip flip;
 
-	TextImageView imageView;
-	ImageView node1;
-	ImageView node2;
-	ImageView node3;
-	ImageView node4;
-	NodeTouchListener touchListener1;
-	NodeTouchListener touchListener2;
-	NodeTouchListener touchListener3;
-	NodeTouchListener touchListener4;
-	NodeDragListener dragListener;
+	private TextImageView imageView;
+	private ImageView node1;
+	private ImageView node2;
+	private ImageView node3;
+	private ImageView node4;
+	private NodeTouchListener touchListener1;
+	private NodeTouchListener touchListener2;
+	private NodeTouchListener touchListener3;
+	private NodeTouchListener touchListener4;
+	private NodeDragListener dragListener;
 	
-	Menu menu;
+	private Menu menu;
+	
+	private final String modifiedImageDirectory = Environment.getExternalStorageDirectory() + "/tesseract/modimage.png";
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +53,7 @@ public class ImagePreprocessor extends Activity {
 		crop = new Crop();
 		flip = new Flip();
 
-		/* Get ImageView's from stylesheet */
+		/* Get ImageView's from style sheet */
 		imageView = (TextImageView) findViewById(R.id.imagePreview);
 
 		node1 = (ImageView) findViewById(R.id.nodeIcon1);
@@ -152,7 +155,7 @@ public class ImagePreprocessor extends Activity {
 
 			FileOutputStream out = null;
 			try {
-				out = new FileOutputStream(Environment.getExternalStorageDirectory() + "/tesseract/modimage.png");
+				out = new FileOutputStream(modifiedImageDirectory);
 				imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block

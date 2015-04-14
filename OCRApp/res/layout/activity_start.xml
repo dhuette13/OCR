@@ -16,7 +16,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="9dp"
         android:background="#137DCC"
-        android:text="Upload"
+        android:text="@string/upload"
         android:textColor="@android:color/white"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -30,7 +30,7 @@
             android:layout_below="@+id/spinner"
             android:layout_marginTop="24dp"
             android:background="#137DCC"
-            android:text="Camera"
+            android:text="@string/camera"
             android:textColor="@android:color/white"
             android:textSize="22sp"
             android:textStyle="bold"
@@ -43,7 +43,7 @@
         android:layout_below="@+id/button3"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="9dp"
-        android:text="@string/Glypthic"
+        android:text="@string/app_name"
         android:textSize="40sp" />
 
     <Spinner
@@ -76,7 +76,7 @@
         android:background="@drawable/round_button"
         android:minHeight="35dp"
         android:minWidth="35dp"
-        android:text="@string/help"
+        android:text="@string/action_help"
         android:textColor="@android:color/white"
         android:textSize="12sp"
         android:textStyle="bold" />

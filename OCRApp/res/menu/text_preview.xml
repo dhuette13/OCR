@@ -14,7 +14,7 @@
         android:title="@string/action_ok">
     </item>
     <item
-        android:id="@+id/Cancel"
+        android:id="@+id/cancel"
         android:showAsAction="ifRoom"
         android:icon="@android:drawable/ic_menu_close_clear_cancel"
         android:title="@string/action_cancel">

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
@@ -33,20 +32,18 @@ import br.com.thinkti.android.filechooser.FileChooser;
 import com.ocrapp.R;
 import com.ocrapp.imageui.ImagePreprocessor;
 
-
 public class StartActivity extends Activity implements OnItemSelectedListener{
 	private String lang;
-	Spinner spinner;
-	Button uploadbtn;
-	Button camerabtn;
-	Button helpbtn;
-	TextView tvOut;
-	Intent intent;	
-
-	boolean isCamera = false;
-	Point p;
+	private Spinner spinner;
+	private Button uploadbtn;
+	private Button camerabtn;
+	private Button helpbtn;
+	private Intent intent;	
+	private Point point;
 	
+	private final String cameraDirectory = Environment.getExternalStorageDirectory() + "/tesseract/camera/image.png";
 
+	private boolean isCamera = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +82,7 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 				isCamera = true;
 				Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 				
-				Uri uriSavedImage = Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/tesseract/camera/image.png"));
+				Uri uriSavedImage = Uri.fromFile(new File(cameraDirectory));
 				cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
 				
 				if (cameraIntent.resolveActivity(getPackageManager()) != null) {
@@ -103,8 +100,8 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 		       public void onClick(View v) {
 		         // TODO Auto-generated method stub
 
-		    	   if (p != null)
-		    	       showPopup(StartActivity.this, p);
+		    	   if (point != null)
+		    	       showPopup(StartActivity.this, point);
 		       }
 		     };
 		helpbtn.setOnClickListener(oclBtnHELP);
@@ -113,7 +110,7 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 		/** Spinner **/
 		spinner = (Spinner) findViewById(R.id.spinner);
 		// Create an ArrayAdapter using the string array and a default spinner layout
-		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.lang_array, android.R.layout.simple_spinner_item);
+		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.lang_array, android.R.layout.simple_spinner_item);
 		// Specify the layout to use when the list of choices appears
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		// Apply the adapter to the spinner
@@ -176,8 +173,8 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		/* File chooser used */
 		if ((requestCode == 1) && (resultCode == -1) && !isCamera) {
-			Bitmap bmp = null;
 			String fileSelected = data.getStringExtra("fileSelected");
 			System.out.println("SELECTED FILE: " + fileSelected);
 
@@ -187,17 +184,19 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 			startActivity(imagePreprocessor);
 
 		}
+		/* Camera used to capture image */
 		else if ((requestCode == 1) && (resultCode == -1) && isCamera) {
 //			String fileSelected = data.getStringExtra("fileSelected");
 //			System.out.println("SELECTED FILE: " + fileSelected);
 			
 			Intent imagePreprocessor = new Intent(this, ImagePreprocessor.class);
-			imagePreprocessor.putExtra("file", "/mnt/sdcard/tesseract/camera/image.png");
+			imagePreprocessor.putExtra("file", cameraDirectory);
 			imagePreprocessor.putExtra("lang", lang);
 			startActivity(imagePreprocessor);
 			
 		}
 	}
+	
 	// Next two methods are for help button popup
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
@@ -210,9 +209,9 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 	   button.getLocationOnScreen(location);
 	 
 	   //Initialize the Point with x, and y positions
-	   p = new Point();
-	   p.x = location[0];
-	   p.y = location[1];
+	   point = new Point();
+	   point.x = location[0];
+	   point.y = location[1];
 	}
 	 
 	// The method that displays the popup.

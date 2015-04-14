@@ -26,12 +26,11 @@ import com.googlecode.tesseract.android.TessBaseAPI;
 public class Conversion extends Activity {
 
 	// Conversion Variables
-	final TessBaseAPI baseAPI = new TessBaseAPI();
-	String TESSBASE_PATH = Environment.getExternalStorageDirectory().getPath() + "/tesseract/";
-	Bitmap newBitmap; 
-	String lang; 
-	Bundle extras; 
-	String text; 
+	private final TessBaseAPI baseAPI = new TessBaseAPI();
+	private String TESSBASE_PATH = Environment.getExternalStorageDirectory().getPath() + "/tesseract/";
+	private Bitmap newBitmap; 
+	private String lang; 
+	private String text; 
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {

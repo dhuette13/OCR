@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginRight="29dp"
-        android:text="Converting..."
+        android:text="@string/conversion"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <ImageView

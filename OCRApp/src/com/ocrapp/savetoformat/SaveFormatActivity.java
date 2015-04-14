@@ -16,17 +16,16 @@ import android.widget.Toast;
 import com.ocrapp.R;
 import com.ocrapp.startscreen.StartActivity;
 
-
-
 public class SaveFormatActivity extends Activity {
 
-	String importedText="Hello World";
+	private String importedText;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_save);
-	//	Bundle b = getIntent().getExtras();
-//		importedText = b.getString("item");
+		Bundle b = getIntent().getExtras();
+		importedText = b.getString("text");
 	}
 
 	@Override
