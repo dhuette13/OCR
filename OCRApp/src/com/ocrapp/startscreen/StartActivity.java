@@ -205,8 +205,8 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 	 
 	// The method that displays the popup.
 	private void showPopup(final Activity context, Point p) {
-	   int popupWidth = 1000;
-	   int popupHeight = 750;
+	   int popupWidth = 900;
+	   int popupHeight = 650;
 	 
 	   // Inflate the popup_layout.xml
 	   LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.popup);
