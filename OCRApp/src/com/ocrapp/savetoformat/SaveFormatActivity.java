@@ -24,8 +24,8 @@ public class SaveFormatActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_save);
-		Bundle b = getIntent().getExtras();
-		importedText = b.getString("text");
+//		Bundle b = getIntent().getExtras();
+//		importedText = (String) b.get("text");
 	}
 
 	@Override

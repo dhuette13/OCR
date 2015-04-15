@@ -30,6 +30,7 @@
     <string name="title_activity_image_preprocessor">Image Preprocessor</string>
     <string name="title_activity_conversion">Conversion</string>
     <string name="title_activity_text_preview">Text Preview</string>
+    <string name="title_activity_save_to_format">Save to Format</string>
     <string name="title_activity_help">Help</string>
 
 </resources>

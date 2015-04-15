@@ -21,10 +21,6 @@
         <activity android:name="br.com.thinkti.android.filechooser.FileChooser" >
         </activity>
         <activity
-            android:name=".imageui.ImagePreprocessor"
-            android:label="@string/title_activity_image_preprocessor" >
-        </activity>
-        <activity
             android:name=".startscreen.StartActivity"
             android:label="@string/title_activity_start" >
             <intent-filter>
@@ -32,6 +28,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".imageui.ImagePreprocessor"
+            android:label="@string/title_activity_image_preprocessor" >
         </activity>
         <activity
             android:name=".Conversion"
@@ -42,11 +42,11 @@
             android:label="@string/title_activity_text_preview" >
         </activity>
         <activity
-            android:name="com.ocrapp.savetoformat.SaveFormatActivity"
-            android:label="SaveFormat" >
+            android:name=".savetoformat.SaveFormatActivity"
+            android:label="@string/title_activity_save_to_format" >
         </activity>
         <activity
-            android:name="com.ocrapp.savetoformat.Help"
+            android:name=".savetoformat.Help"
             android:label="@string/title_activity_help" >
         </activity>
     </application>
