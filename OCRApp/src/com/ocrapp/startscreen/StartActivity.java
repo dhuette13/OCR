@@ -50,12 +50,12 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start);
 
-		TextView myTextView=(TextView)findViewById(R.id.textview1);
-		Typeface typeFace=Typeface.createFromAsset(getAssets(),"fonts/Dosis-Bold.ttf");
+		TextView myTextView = (TextView)findViewById(R.id.textview1);
+		Typeface typeFace = Typeface.createFromAsset(getAssets(),"fonts/Dosis-Bold.ttf");
 		myTextView.setTypeface(typeFace);
 		
 		
-		/** Upload Button ***/
+		/* Upload Button */
 		intent = new Intent(this, FileChooser.class);
 		uploadbtn = (Button) findViewById(R.id.button2);
 		OnClickListener oclBtnUP = new OnClickListener() {
@@ -93,7 +93,7 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 		camerabtn.setOnClickListener(oclBtnCAM);
 
 		
-		/** Help Button ***/
+		/* Help Button */
 		 helpbtn = (Button) findViewById(R.id.button3);
 		 OnClickListener oclBtnHELP = new OnClickListener() {
 		       @Override

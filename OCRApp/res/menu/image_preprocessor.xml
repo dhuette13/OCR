@@ -8,7 +8,7 @@
         android:title="@string/action_help"/>
     <item
         android:id="@+id/rotate_right"
-        android:icon="@android:drawable/ic_menu_rotate"
+        android:icon="@drawable/ic_menu_rotate_right"
         android:showAsAction="ifRoom"
         android:title="@string/action_rotate_right">
     </item>

@@ -3,8 +3,8 @@
 
     <string name="app_name">Glyphtic</string>
     <string name="hello_world">Hello world!</string>
-    <string name="upload">Upload</string>
-    <string name="camera">Camera</string>
+    <string name="action_upload">Upload</string>
+    <string name="action_camera">Camera</string>
     <string name="action_settings">Settings</string>
     <string name="action_help">Help</string>
     <string name="action_crop">Crop</string>
@@ -13,9 +13,7 @@
     <string name="action_ok">OK</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_undo">Undo</string>
-    <string name="conversion">Converting...</string>
-    <string name="title_activity_image_preprocessor">ImagePreprocessor</string>
-    <string name="title_activity_start">StartActivity</string>
+    <string name="conversion_message">Converting...</string>
 
     <string-array name="lang_array">
         <item>English</item>
@@ -28,8 +26,10 @@
         <item>German</item>
     </string-array>
 
+    <string name="title_activity_start">Start Activity</string>
+    <string name="title_activity_image_preprocessor">Image Preprocessor</string>
     <string name="title_activity_conversion">Conversion</string>
-    <string name="title_activity_text_preview">TextPreview</string>
+    <string name="title_activity_text_preview">Text Preview</string>
     <string name="title_activity_help">Help</string>
 
 </resources>
