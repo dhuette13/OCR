@@ -50,6 +50,7 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start);
 
+		
 		TextView myTextView = (TextView)findViewById(R.id.textview1);
 		Typeface typeFace = Typeface.createFromAsset(getAssets(),"fonts/Dosis-Bold.ttf");
 		myTextView.setTypeface(typeFace);

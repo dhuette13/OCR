@@ -45,10 +45,6 @@
             android:name=".savetoformat.SaveFormatActivity"
             android:label="@string/title_activity_save_to_format" >
         </activity>
-        <activity
-            android:name=".savetoformat.Help"
-            android:label="@string/title_activity_help" >
-        </activity>
     </application>
 
 </manifest>
