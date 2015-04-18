@@ -17,7 +17,7 @@
         android:layout_marginTop="80dp"
         android:background="#137DCC"
         android:onClick="converttxt"
-        android:text=".txt format"
+        android:text="Save to txt"
         android:textColor="@android:color/white"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -27,16 +27,27 @@
         android:id="@+id/button3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/button2"
+        android:layout_alignLeft="@+id/button2"
         android:layout_below="@+id/button2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="47dp"
+        android:layout_marginTop="28dp"
         android:background="#137DCC"
         android:onClick="gotostart"
-        android:text="Cancel"
+        android:text="Continue"
         android:textColor="@android:color/white"
         android:textSize="22sp"
         android:textStyle="bold"
         android:width="200dp" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/button2"
+        android:layout_marginTop="14dp"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
 
 </RelativeLayout>

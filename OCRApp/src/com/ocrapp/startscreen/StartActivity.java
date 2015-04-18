@@ -2,6 +2,7 @@ package com.ocrapp.startscreen;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.app.Activity;
 import android.content.Context;
@@ -41,7 +42,9 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 	private Intent intent;	
 	private Point point;
 	
-	private final String cameraDirectory = Environment.getExternalStorageDirectory() + "/tesseract/camera/image.png";
+	private final String tesseractRoot = Environment.getExternalStorageDirectory() + "/tesseract/";
+	private final String cameraRoot = Environment.getExternalStorageDirectory() + "/tesseract/camera/";
+	private String cameraFile;
 
 	private boolean isCamera = false;
 
@@ -49,7 +52,29 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start);
-
+		
+		/* Check for necessary directoryies */
+		File tesseractDirectory = new File(tesseractRoot);
+		if(!tesseractDirectory.exists()){
+			tesseractDirectory.mkdirs();
+		}
+		
+		File picturesDirectory = new File(tesseractRoot + "pictures/");
+		if(!picturesDirectory.exists()){
+			picturesDirectory.mkdirs();
+		}
+		
+		File cameraDirectory = new File(tesseractRoot + "camera/");
+		if(!cameraDirectory.exists()){
+			System.out.println("Making Camera Directory");
+			cameraDirectory.mkdirs();
+		}
+		
+		File outputDirectory = new File(tesseractRoot + "output/");
+		if(!outputDirectory.exists()){
+			System.out.println("Making Output Directory");
+			outputDirectory.mkdirs();
+		}
 		
 		TextView myTextView = (TextView)findViewById(R.id.textview1);
 		Typeface typeFace = Typeface.createFromAsset(getAssets(),"fonts/Dosis-Bold.ttf");
@@ -83,7 +108,9 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 				isCamera = true;
 				Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 				
-				Uri uriSavedImage = Uri.fromFile(new File(cameraDirectory));
+				String date = Calendar.YEAR + "-" + Calendar.MONTH + "-" + Calendar.DAY_OF_MONTH + " " + Calendar.HOUR + ":" + Calendar.MINUTE + ":" + Calendar.SECOND;
+				cameraFile = cameraRoot + date + ".png";
+				Uri uriSavedImage = Uri.fromFile(new File(cameraFile));
 				cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
 				
 				if (cameraIntent.resolveActivity(getPackageManager()) != null) {
@@ -191,7 +218,7 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 //			System.out.println("SELECTED FILE: " + fileSelected);
 			
 			Intent imagePreprocessor = new Intent(this, ImagePreprocessor.class);
-			imagePreprocessor.putExtra("file", cameraDirectory);
+			imagePreprocessor.putExtra("file", cameraFile);
 			imagePreprocessor.putExtra("lang", lang);
 			startActivity(imagePreprocessor);
 			
@@ -253,5 +280,4 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 	     }
 	   });
 	}
-
 }

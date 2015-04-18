@@ -11,6 +11,7 @@ import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ocrapp.R;
@@ -19,7 +20,8 @@ import com.ocrapp.startscreen.StartActivity;
 public class SaveFormatActivity extends Activity {
 
 	private String importedText;
-	private final String output = Environment.getExternalStorageDirectory() + "/tesseract/output.txt";
+	private final String outputDirectory = Environment.getExternalStorageDirectory() + "/tesseract/output/";
+	private EditText fileInput;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class SaveFormatActivity extends Activity {
 
 		Bundle b = getIntent().getExtras();
 		importedText = b.getString("text");
+		fileInput = (EditText) findViewById(R.id.editText1);
 		
 	}
 
@@ -49,18 +52,21 @@ public class SaveFormatActivity extends Activity {
 	
 	public void converttxt(View view){
 		PrintWriter print;
-		try {
+		String filename = fileInput.getText().toString();
+		if(!filename.equals("")){
+			try {
+				filename = fileInput.getText().toString();
+				print = new PrintWriter(new File(outputDirectory + filename + ".txt"));
+				print.println(importedText);
+				print.close();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
-			print = new PrintWriter(new File(output));
-			print.println(importedText);
-			print.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Toast giveMessage = Toast.makeText(this, "File " + filename + "saved in txt format", Toast.LENGTH_LONG);
+			giveMessage.show();
 		}
-		
-		Toast giveMessage = Toast.makeText(this, "File saved in txt format", Toast.LENGTH_LONG);
-		giveMessage.show();
 	}
 	
 	
