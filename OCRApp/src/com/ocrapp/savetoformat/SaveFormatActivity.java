@@ -52,6 +52,7 @@ public class SaveFormatActivity extends Activity {
 	
 	public void converttxt(View view){
 		PrintWriter print;
+		Toast notify;
 		String filename = fileInput.getText().toString();
 		if(!filename.equals("")){
 			try {
@@ -64,8 +65,13 @@ public class SaveFormatActivity extends Activity {
 				e.printStackTrace();
 			}
 			
-			Toast giveMessage = Toast.makeText(this, "File " + filename + "saved in txt format", Toast.LENGTH_LONG);
-			giveMessage.show();
+			notify = Toast.makeText(this, "File " + filename + ".txt saved in txt format", Toast.LENGTH_LONG);
+			notify.show();
+		}
+		else {
+			notify = Toast.makeText(this, "Filename cannot be empty", Toast.LENGTH_LONG);
+			notify.show();
+			
 		}
 	}
 	

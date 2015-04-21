@@ -51,7 +51,14 @@ public class Crop {
 		int cropWidth = x2 - x1;
 		int cropHeight = y2 - y1;
 		
-		if((x1 >= 0) && (y1 >=0) && (x2 >= 0) && (y2 >=0)){
+		int scaledCropWidth = (int) (node2.getX() - node1.getX());
+		int scaledCropHeight = (int) (node3.getY() - node1.getY());
+		/* Ensure crop selection is inside the bounds of the image */
+		if( (x1 >= 0) && 
+			(y1 >=0) &&
+			(x2 >= 0) && (scaledCropWidth <= actualWidth) &&
+			(y2 >=0) && (scaledCropHeight <= actualHeight)){
+			/* Crop based on selection */
 			Box box = new Box(x1, y1, cropWidth, cropHeight);
 			Pix croppedPix = Clip.clipRectangle(pix, box);
 			Bitmap croppedBitmap = WriteFile.writeBitmap(croppedPix);
