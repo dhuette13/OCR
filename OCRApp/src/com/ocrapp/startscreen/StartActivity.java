@@ -42,7 +42,6 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 	private Intent intent;	
 	private Point point;
 	
-	private final String tesseractRoot = Environment.getExternalStorageDirectory() + "/tesseract/";
 	private final String cameraRoot = Environment.getExternalStorageDirectory() + "/tesseract/camera/";
 	private String cameraFile;
 
@@ -52,29 +51,7 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start);
-		
-		/* Check for necessary directoryies */
-		File tesseractDirectory = new File(tesseractRoot);
-		if(!tesseractDirectory.exists()){
-			tesseractDirectory.mkdirs();
-		}
-		
-		File picturesDirectory = new File(tesseractRoot + "pictures/");
-		if(!picturesDirectory.exists()){
-			picturesDirectory.mkdirs();
-		}
-		
-		File cameraDirectory = new File(tesseractRoot + "camera/");
-		if(!cameraDirectory.exists()){
-			System.out.println("Making Camera Directory");
-			cameraDirectory.mkdirs();
-		}
-		
-		File outputDirectory = new File(tesseractRoot + "output/");
-		if(!outputDirectory.exists()){
-			System.out.println("Making Output Directory");
-			outputDirectory.mkdirs();
-		}
+	    setTitle(R.string.app_name);
 		
 		TextView myTextView = (TextView)findViewById(R.id.textview1);
 		Typeface typeFace = Typeface.createFromAsset(getAssets(),"fonts/Dosis-Bold.ttf");

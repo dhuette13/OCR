@@ -13,6 +13,7 @@ import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.ocrapp.Conversion;
 import com.ocrapp.R;
@@ -103,14 +104,22 @@ public class ImagePreprocessor extends Activity {
 			return true;
 		}
 		else if(id == R.id.crop) {
-			oldBitmap = imageBitmap;
 			System.out.println("CROPPING IMAGE");
 			crop.setNodes(node1, node2, node3, node4);
 			crop.setImage(imageBitmap, imageView);
 
-			imageBitmap = crop.cropBitmap();
-			imageView.setImageBitmap(imageBitmap);
-			menu.findItem(R.id.undo).setEnabled(true);
+			Bitmap cropBitmap = crop.cropBitmap();
+			/* If crop returned null, the selection was invalid */
+			if(cropBitmap == null){
+				Toast.makeText(this, "Invalid Selection", Toast.LENGTH_LONG).show();
+			}
+			/* Else, the selection was valid */
+			else {
+				oldBitmap = imageBitmap;
+				imageBitmap = cropBitmap;
+				imageView.setImageBitmap(imageBitmap);
+				menu.findItem(R.id.undo).setEnabled(true);
+			}
 		}
 		else if(id == R.id.rotate_left){
 			oldBitmap = imageBitmap;

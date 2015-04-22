@@ -46,7 +46,7 @@ public class TextPreview extends Activity {
 		}
 		else if(id == R.id.OK){
 			Intent i = new Intent(this, SaveFormatActivity.class);
-			i.putExtra("text", text);
+			i.putExtra("text", textView.getText());
 			startActivity(i);
 			return true;
 		}
