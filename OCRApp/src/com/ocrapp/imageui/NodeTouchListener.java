@@ -52,19 +52,16 @@ public class NodeTouchListener implements OnTouchListener {
 				dragPointX = 0;
 				dragPointY = 0;
 				break;
-
 			case 2:
 				System.out.println("Shadow BUilder case 2");
 				dragPointX = 0;
 				dragPointY = 0;
 				break;
-
 			case 3:
 				System.out.println("Shadow BUilder case 3");
 				dragPointX = 0;
 				dragPointY = 0;
 				break;
-
 			case 4:
 				System.out.println("Shadow BUilder case 4");
 				dragPointX = 0;
@@ -74,7 +71,6 @@ public class NodeTouchListener implements OnTouchListener {
 				System.out.println("Shadow BUilder case default");
 				dragPointX = view.getWidth();
 				dragPointY = view.getHeight();
-
 			}
 		}
 
