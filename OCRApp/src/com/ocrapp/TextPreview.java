@@ -25,7 +25,6 @@ public class TextPreview extends Activity {
 		
 		text = getIntent().getExtras().getString("text");
 		textView.setText(text);
-		
 	}
 
 	@Override
@@ -46,7 +45,7 @@ public class TextPreview extends Activity {
 		}
 		else if(id == R.id.OK){
 			Intent i = new Intent(this, SaveFormatActivity.class);
-			i.putExtra("text", textView.getText());
+			i.putExtra("text", textView.getText().toString());
 			startActivity(i);
 			return true;
 		}
