@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -41,7 +42,7 @@ public class ImagePreprocessor extends Activity {
 	private Menu menu;
 	
 	private final String modifiedImageDirectory = Environment.getExternalStorageDirectory() + "/tesseract/modimage.png";
-
+	private String fileSelected;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +76,7 @@ public class ImagePreprocessor extends Activity {
 		node4.setOnTouchListener(touchListener4);
 
 		/* Get passed file selected, read to bitmap, and place on image preview */
-		String fileSelected = (String) this.getIntent().getExtras().get("file");
+		fileSelected = (String) this.getIntent().getExtras().get("file");
 		lang = (String) this.getIntent().getExtras().get("lang");
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inPreferredConfig = Bitmap.Config.ARGB_8888;
@@ -100,10 +101,8 @@ public class ImagePreprocessor extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		else if(id == R.id.crop) {
+		
+		if(id == R.id.crop) {
 			System.out.println("CROPPING IMAGE");
 			crop.setNodes(node1, node2, node3, node4);
 			crop.setImage(imageBitmap, imageView);
@@ -167,14 +166,12 @@ public class ImagePreprocessor extends Activity {
 				out = new FileOutputStream(modifiedImageDirectory);
 				imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} finally {
 				try {
 					if(out != null)
 						out.close();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -182,12 +179,31 @@ public class ImagePreprocessor extends Activity {
 			imageBitmap.recycle();
 			startActivity(i);
 		}
-		else if(id == R.id.action_help){
-			//			Intent i = new Intent(this, Help.class);
-			//			startActivity(i);
-		}
 		System.gc();
 		return super.onOptionsItemSelected(item);
 	}
-
+	
+	@Override
+	public void onConfigurationChanged(Configuration newConfig){
+		super.onConfigurationChanged(newConfig);
+		
+		System.out.println("CONFIGURATION CHANGED");
+		
+		FileOutputStream out = null;
+		try {
+			out = new FileOutputStream(modifiedImageDirectory);
+			imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				if(out != null)
+					out.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 }

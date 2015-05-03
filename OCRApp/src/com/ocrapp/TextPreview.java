@@ -40,10 +40,8 @@ public class TextPreview extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		else if(id == R.id.OK){
+		
+		if(id == R.id.OK){
 			Intent i = new Intent(this, SaveFormatActivity.class);
 			i.putExtra("text", textView.getText().toString());
 			startActivity(i);

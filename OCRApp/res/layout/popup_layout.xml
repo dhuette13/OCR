@@ -11,7 +11,7 @@
    android:id="@+id/textView1"
    android:layout_width="wrap_content"
    android:layout_height="wrap_content"
-   android:text="Help"
+   android:text="@string/action_help"
    android:textColor="@android:color/black"
    android:textAppearance="?android:attr/textAppearanceMedium" />
  
@@ -32,7 +32,7 @@
     android:background="@android:color/white"
     android:minHeight="38dp"
     android:minWidth="54dp"
-    android:text="Close"
+    android:text="@string/action_close"
     android:textColor="@android:color/black"
     android:textSize="15sp" />
  

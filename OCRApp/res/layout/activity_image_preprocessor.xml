@@ -11,8 +11,8 @@
 
     <com.ocrapp.imageui.TextImageView
         android:id="@+id/imagePreview"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:src="@drawable/ic_launcher" />
 
     <ImageView
@@ -21,11 +21,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:adjustViewBounds="false"
         android:baselineAlignBottom="false"
         android:padding="0dp"
         android:scaleType="centerInside"
-        android:src="@drawable/crop_box" />
+        android:src="@drawable/crop_box"/>
 
     <ImageView
         android:id="@+id/nodeIcon4"
@@ -33,6 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:src="@drawable/crop_box" />
 
     <ImageView
@@ -40,6 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:src="@drawable/crop_box" />
 
@@ -48,6 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:scaleType="fitXY"
         android:src="@drawable/crop_box" />

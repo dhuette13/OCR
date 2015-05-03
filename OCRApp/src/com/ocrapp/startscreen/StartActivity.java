@@ -1,6 +1,10 @@
 package com.ocrapp.startscreen;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -36,13 +40,14 @@ import com.ocrapp.imageui.ImagePreprocessor;
 public class StartActivity extends Activity implements OnItemSelectedListener{
 	private String lang;
 	private Spinner spinner;
-	private Button uploadbtn;
-	private Button camerabtn;
-	private Button helpbtn;
+	private Button uploadButton;
+	private Button cameraButton;
+	private Button helpButton;
 	private Intent intent;	
 	private Point point;
-	
+
 	private final String cameraRoot = Environment.getExternalStorageDirectory() + "/tesseract/camera/";
+	private final String tesseractRoot = Environment.getExternalStorageDirectory() + "/tesseract/";
 	private String cameraFile;
 
 	private boolean isCamera = false;
@@ -51,16 +56,16 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_start);
-	    setTitle(R.string.app_name);
-		
+		setTitle(R.string.app_name);
+
 		TextView myTextView = (TextView)findViewById(R.id.textview1);
 		Typeface typeFace = Typeface.createFromAsset(getAssets(),"fonts/Dosis-Bold.ttf");
 		myTextView.setTypeface(typeFace);
-		
-		
+
+
 		/* Upload Button */
 		intent = new Intent(this, FileChooser.class);
-		uploadbtn = (Button) findViewById(R.id.button2);
+		uploadButton = (Button) findViewById(R.id.uploadButton);
 		OnClickListener oclBtnUP = new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -75,43 +80,43 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 				startActivityForResult(intent, 1);
 			}
 		};
-		uploadbtn.setOnClickListener(oclBtnUP);
+		uploadButton.setOnClickListener(oclBtnUP);
 
 		/* Camera Button*/
-		camerabtn = (Button) findViewById(R.id.button1);
+		cameraButton = (Button) findViewById(R.id.cameraButton);
 		OnClickListener oclBtnCAM = new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				isCamera = true;
 				Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-				
+
 				String date = Calendar.YEAR + "-" + Calendar.MONTH + "-" + Calendar.DAY_OF_MONTH + " " + Calendar.HOUR + ":" + Calendar.MINUTE + ":" + Calendar.SECOND;
 				cameraFile = cameraRoot + date + ".png";
 				Uri uriSavedImage = Uri.fromFile(new File(cameraFile));
 				cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
-				
+
 				if (cameraIntent.resolveActivity(getPackageManager()) != null) {
 					startActivityForResult(cameraIntent, 1);
 				}
 			}
 		};
-		camerabtn.setOnClickListener(oclBtnCAM);
+		cameraButton.setOnClickListener(oclBtnCAM);
 
-		
+
 		/* Help Button */
-		 helpbtn = (Button) findViewById(R.id.button3);
-		 OnClickListener oclBtnHELP = new OnClickListener() {
-		       @Override
-		       public void onClick(View v) {
-		         // TODO Auto-generated method stub
+		helpButton = (Button) findViewById(R.id.helpButton);
+		OnClickListener oclBtnHELP = new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
 
-		    	   if (point != null)
-		    	       showPopup(StartActivity.this, point);
-		       }
-		     };
-		helpbtn.setOnClickListener(oclBtnHELP);
+				if (point != null)
+					showPopup(StartActivity.this, point);
+			}
+		};
+		helpButton.setOnClickListener(oclBtnHELP);
 
-		
+
 		/** Spinner **/
 		spinner = (Spinner) findViewById(R.id.spinner);
 		// Create an ArrayAdapter using the string array and a default spinner layout
@@ -160,7 +165,7 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		
+
 		return true;
 	}
 
@@ -169,92 +174,106 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
 		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		/* File chooser used */
 		if ((requestCode == 1) && (resultCode == -1) && !isCamera) {
-			String fileSelected = data.getStringExtra("fileSelected");
-			System.out.println("SELECTED FILE: " + fileSelected);
-
+			String intentFile = tesseractRoot + "modimage.png";
+			String sourceFile = null;
+			/* File chooser used */
+			if(isCamera)
+				sourceFile = cameraFile;
+			/* Camera used to capture image */
+			else
+				sourceFile = data.getStringExtra("fileSelected");
+			
+			/* Copy file to modimage.png */
+			try {
+				copy(new File(sourceFile), new File(intentFile));
+			}
+			catch(FileNotFoundException e){
+				System.out.println("Could not find file.");
+			}
+			catch(IOException e){
+				System.out.println("Error opening file.");
+			}
+			
+			/* Switch intent with language and image file to read from */
 			Intent imagePreprocessor = new Intent(this, ImagePreprocessor.class);
-			imagePreprocessor.putExtra("file", fileSelected);
+			imagePreprocessor.putExtra("file", intentFile);
 			imagePreprocessor.putExtra("lang", lang);
 			startActivity(imagePreprocessor);
-
-		}
-		/* Camera used to capture image */
-		else if ((requestCode == 1) && (resultCode == -1) && isCamera) {
-//			String fileSelected = data.getStringExtra("fileSelected");
-//			System.out.println("SELECTED FILE: " + fileSelected);
-			
-			Intent imagePreprocessor = new Intent(this, ImagePreprocessor.class);
-			imagePreprocessor.putExtra("file", cameraFile);
-			imagePreprocessor.putExtra("lang", lang);
-			startActivity(imagePreprocessor);
-			
 		}
 	}
 	
+	private void copy(File src, File dst) throws IOException {
+	    FileInputStream in = new FileInputStream(src);
+	    FileOutputStream out = new FileOutputStream(dst);
+
+	    // Transfer bytes from in to out
+	    byte[] buf = new byte[1024];
+	    int len;
+	    while ((len = in.read(buf)) > 0) {
+	        out.write(buf, 0, len);
+	    }
+	    in.close();
+	    out.close();
+	}
+
 	// Next two methods are for help button popup
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
-	 
-	   int[] location = new int[2];
-	   Button button = (Button) findViewById(R.id.button3);
-	 
-	   // Get the x, y location and store it in the location[] array
-	   // location[0] = x, location[1] = y.
-	   button.getLocationOnScreen(location);
-	 
-	   //Initialize the Point with x, and y positions
-	   point = new Point();
-	   point.x = location[0];
-	   point.y = location[1];
+
+		int[] location = new int[2];
+
+		// Get the x, y location and store it in the location[] array
+		// location[0] = x, location[1] = y.
+		helpButton.getLocationOnScreen(location);
+
+		//Initialize the Point with x, and y positions
+		point = new Point();
+		point.x = location[0];
+		point.y = location[1];
 	}
-	 
+
 	// The method that displays the popup.
 	private void showPopup(final Activity context, Point p) {
-	   int popupWidth = 900;
-	   int popupHeight = 650;
-	 
-	   // Inflate the popup_layout.xml
-	   LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.popup);
-	   LayoutInflater layoutInflater = (LayoutInflater) context
-	     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	   View layout = layoutInflater.inflate(R.layout.popup_layout, viewGroup);
-	 
-	   // Creating the PopupWindow
-	   final PopupWindow popup = new PopupWindow(context);
-	   popup.setContentView(layout);
-	   popup.setWidth(popupWidth);
-	   popup.setHeight(popupHeight);
-	   popup.setFocusable(true);
-	 
-	   // Some offset to align the popup a bit to the right, and a bit down, relative to button's position.
-	   int OFFSET_X = 60;
-	   int OFFSET_Y = 70;
-	 
-	   // Clear the default translucent background
-	   popup.setBackgroundDrawable(new BitmapDrawable());
-	 
-	   // Displaying the popup at the specified location, + offsets.
-	   popup.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y + OFFSET_Y);
-	 
-	   // Getting a reference to Close button, and close the popup when clicked.
-	   Button close = (Button) layout.findViewById(R.id.close);
-	   close.setOnClickListener(new OnClickListener() {
-	 
-	     @Override
-	     public void onClick(View v) {
-	       popup.dismiss();
-	     }
-	   });
+		int popupWidth = 450;
+		int popupHeight = 650;
+
+		// Inflate the popup_layout.xml
+		LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.popup);
+		LayoutInflater layoutInflater = (LayoutInflater) context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View layout = layoutInflater.inflate(R.layout.popup_layout, viewGroup);
+
+		// Creating the PopupWindow
+		final PopupWindow popup = new PopupWindow(context);
+		popup.setContentView(layout);
+		popup.setWidth(popupWidth);
+		popup.setHeight(popupHeight);
+		popup.setFocusable(true);
+
+		// Some offset to align the popup a bit to the right, and a bit down, relative to button's position.
+		int OFFSET_X = 60;
+		int OFFSET_Y = 70;
+
+		// Clear the default translucent background
+		popup.setBackgroundDrawable(new BitmapDrawable());
+
+		// Displaying the popup at the specified location, + offsets.
+		popup.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y + OFFSET_Y);
+
+		// Getting a reference to Close button, and close the popup when clicked.
+		Button close = (Button) layout.findViewById(R.id.close);
+		close.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				popup.dismiss();
+			}
+		});
 	}
 }

@@ -11,6 +11,8 @@ import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -22,6 +24,8 @@ public class SaveFormatActivity extends Activity {
 	private String importedText;
 	private final String outputDirectory = Environment.getExternalStorageDirectory() + "/tesseract/output/";
 	private EditText fileInput;
+	private Button saveButton;
+	private Button continueButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,27 +34,30 @@ public class SaveFormatActivity extends Activity {
 
 		Bundle b = getIntent().getExtras();
 		importedText = b.getString("text");
-		fileInput = (EditText) findViewById(R.id.editText1);
+		fileInput = (EditText) findViewById(R.id.fileName);
 		
+		saveButton= (Button) findViewById(R.id.saveButton);
+		continueButton = (Button) findViewById(R.id.continueButton);
+		
+		saveButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				convertText(v);
+			}
+		});
+		
+		continueButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(SaveFormatActivity.this, StartActivity.class);
+				startActivity(i);
+			}
+			
+		});
 	}
 
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-//		getMenuInflater().inflate(R.menu.save_format, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		return super.onOptionsItemSelected(item);
-	}
 	
-	public void converttxt(View view){
+	public void convertText(View view){
 		PrintWriter print;
 		Toast notify;
 		String filename = fileInput.getText().toString();
@@ -75,12 +82,20 @@ public class SaveFormatActivity extends Activity {
 		}
 	}
 	
-	
-	public void gotostart(View view){
-			Intent i = new Intent(this, StartActivity.class);
-			startActivity(i);	
-	} 
-		
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.save_format, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		return super.onOptionsItemSelected(item);
+	}
 }
 
 

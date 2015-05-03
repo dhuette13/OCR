@@ -8,46 +8,47 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.ocrapp.savetoformat.SaveFormatActivity" >
 
-    <Button
-        android:id="@+id/button2"
+    <EditText
+        android:id="@+id/fileName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="Enter File Name..."
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/continueButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/saveButton"
+        android:layout_alignStart="@+id/saveButton"
+        android:layout_below="@+id/fileName"
+        android:layout_marginTop="134dp"
         android:background="#137DCC"
-        android:onClick="converttxt"
-        android:text="Save to txt"
+        android:text="@string/action_continue"
         android:textColor="@android:color/white"
         android:textSize="22sp"
         android:textStyle="bold"
         android:width="200dp" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button2"
-        android:layout_below="@+id/button2"
-        android:layout_marginTop="28dp"
+        android:layout_alignLeft="@+id/fileName"
+        android:layout_alignStart="@+id/fileName"
+        android:layout_below="@+id/fileName"
+        android:layout_marginTop="50dp"
         android:background="#137DCC"
-        android:onClick="gotostart"
-        android:text="Continue"
+        android:text="@string/action_save"
         android:textColor="@android:color/white"
         android:textSize="22sp"
         android:textStyle="bold"
         android:width="200dp" />
-
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/button2"
-        android:layout_marginTop="14dp"
-        android:ems="10" >
-
-        <requestFocus />
-    </EditText>
 
 </RelativeLayout>

@@ -31,43 +31,47 @@ public class Conversion extends Activity {
 	private Bitmap newBitmap; 
 	private String lang; 
 	private String text; 
+	private Thread conversionThread;
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		System.out.println("In Conversion Activity");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_conversion);
-		
-		new Thread(new Runnable(){
+
+		lang = (String) getIntent().getExtras().getString("lang");
+		baseAPI.init(TESSBASE_PATH, lang);
+		baseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_AUTO);
+		baseAPI.setDebug(true);
+
+		conversionThread = new Thread(new Runnable(){
 			@Override
 			public void run() {
-				lang = (String) getIntent().getExtras().getString("lang");
 				BitmapFactory.Options options = new BitmapFactory.Options();
 				options.inPreferredConfig = Bitmap.Config.ARGB_8888;
 				newBitmap = BitmapFactory.decodeFile(TESSBASE_PATH + "modimage.png", options);
-				
-				baseAPI.init(TESSBASE_PATH, lang);
-				baseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_AUTO);
 				baseAPI.setImage(newBitmap);
-				
+
 				newBitmap.recycle();
 				text = baseAPI.getUTF8Text();
-				
+
 				baseAPI.end();
-				
+
 				System.out.println(text);
-				
+
 				Intent i = new Intent(Conversion.this, TextPreview.class);
 				i.putExtra("text", text);
 				startActivity(i);
 			}
-		}).start();
+		});
+		conversionThread.start();
+
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-//		getMenuInflater().inflate(R.menu.conversion, menu);
+		//		getMenuInflater().inflate(R.menu.conversion, menu);
 		return true;
 	}
 
@@ -76,10 +80,6 @@ public class Conversion extends Activity {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
 		return super.onOptionsItemSelected(item);
 	}
 }
