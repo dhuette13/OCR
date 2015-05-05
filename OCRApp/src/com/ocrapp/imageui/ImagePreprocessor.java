@@ -6,7 +6,6 @@ import java.io.IOException;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -38,9 +37,9 @@ public class ImagePreprocessor extends Activity {
 	private NodeTouchListener touchListener3;
 	private NodeTouchListener touchListener4;
 	private NodeDragListener dragListener;
-	
+
 	private Menu menu;
-	
+
 	private final String modifiedImageDirectory = Environment.getExternalStorageDirectory() + "/tesseract/modimage.png";
 	private String fileSelected;
 
@@ -48,8 +47,6 @@ public class ImagePreprocessor extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_image_preprocessor);
-
-		System.out.println("MAX MEMORY: " + Runtime.getRuntime().maxMemory() / (1024 * 1024));
 
 		/* Initialize crop and flip tools, and bitmap history */
 		crop = new Crop();
@@ -101,7 +98,7 @@ public class ImagePreprocessor extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		
+
 		if(id == R.id.crop) {
 			System.out.println("CROPPING IMAGE");
 			crop.setNodes(node1, node2, node3, node4);
@@ -145,7 +142,7 @@ public class ImagePreprocessor extends Activity {
 				imageView.setImageBitmap(imageBitmap);
 				oldBitmap = null;
 				item.setEnabled(false);
-				
+
 				System.gc();
 			}
 		}
@@ -157,7 +154,7 @@ public class ImagePreprocessor extends Activity {
 		}
 		else if(id == R.id.OK){
 			System.out.println("OK Pressed");
-			
+
 			Intent i = new Intent(this, Conversion.class);
 			i.putExtra("lang", lang);
 
@@ -175,35 +172,10 @@ public class ImagePreprocessor extends Activity {
 					e.printStackTrace();
 				}
 			}
-			
-			imageBitmap.recycle();
+
 			startActivity(i);
 		}
 		System.gc();
 		return super.onOptionsItemSelected(item);
-	}
-	
-	@Override
-	public void onConfigurationChanged(Configuration newConfig){
-		super.onConfigurationChanged(newConfig);
-		
-		System.out.println("CONFIGURATION CHANGED");
-		
-		FileOutputStream out = null;
-		try {
-			out = new FileOutputStream(modifiedImageDirectory);
-			imageBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			try {
-				if(out != null)
-					out.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 	}
 }

@@ -1,12 +1,8 @@
 package com.ocrapp.startscreen;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 
 import android.app.Activity;
 import android.content.Context;
@@ -18,6 +14,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.format.DateFormat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -47,10 +44,11 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 	private Point point;
 
 	private final String cameraRoot = Environment.getExternalStorageDirectory() + "/tesseract/camera/";
-	private final String tesseractRoot = Environment.getExternalStorageDirectory() + "/tesseract/";
+	
 	private String cameraFile;
-
-	private boolean isCamera = false;
+	
+	private static final int CAMERA = 1;
+	private static final int FILE = 2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,15 +67,13 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 		OnClickListener oclBtnUP = new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
 
 				ArrayList<String> extensions = new ArrayList<String>();
 				extensions.add(".jpg");
 				extensions.add(".bmp");
 				extensions.add(".png");
 				intent.putStringArrayListExtra("filterFileExtension", extensions);
-				startActivityForResult(intent, 1);
+				startActivityForResult(intent, FILE);
 			}
 		};
 		uploadButton.setOnClickListener(oclBtnUP);
@@ -87,16 +83,16 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 		OnClickListener oclBtnCAM = new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				isCamera = true;
 				Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 
-				String date = Calendar.YEAR + "-" + Calendar.MONTH + "-" + Calendar.DAY_OF_MONTH + " " + Calendar.HOUR + ":" + Calendar.MINUTE + ":" + Calendar.SECOND;
+				String date = DateFormat.getDateFormat(StartActivity.this).format(new Date()).replace('/', '-') + "~" + DateFormat.getTimeFormat(StartActivity.this).format(new Date());
 				cameraFile = cameraRoot + date + ".png";
 				Uri uriSavedImage = Uri.fromFile(new File(cameraFile));
 				cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
+				cameraIntent.putExtra("cameraFile", cameraFile);
 
 				if (cameraIntent.resolveActivity(getPackageManager()) != null) {
-					startActivityForResult(cameraIntent, 1);
+					startActivityForResult(cameraIntent, CAMERA);
 				}
 			}
 		};
@@ -108,7 +104,6 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 		OnClickListener oclBtnHELP = new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 
 				if (point != null)
 					showPopup(StartActivity.this, point);
@@ -135,9 +130,8 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 		spinner.setSelection(pos);
 		lang = (String) spinner.getSelectedItem();
 
-		if(lang.equals("English")){
+		if(lang.equals("English"))
 			lang = "eng";
-		}
 		else if(lang.equals("Spanish"))
 			lang = "spa";
 		else if(lang.equals("French"))
@@ -163,63 +157,28 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		return super.onOptionsItemSelected(item);
-	}
-
-	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if ((requestCode == 1) && (resultCode == -1) && !isCamera) {
-			String intentFile = tesseractRoot + "modimage.png";
-			String sourceFile = null;
-			/* File chooser used */
-			if(isCamera)
+		if (resultCode == -1) {
+			String sourceFile = cameraFile;
+
+			if(requestCode == CAMERA){
+				System.out.println("Camera Used");
 				sourceFile = cameraFile;
-			/* Camera used to capture image */
-			else
+			}
+			else if(requestCode == FILE){
+				System.out.println("File Chooser Used");
 				sourceFile = data.getStringExtra("fileSelected");
-			
-			/* Copy file to modimage.png */
-			try {
-				copy(new File(sourceFile), new File(intentFile));
 			}
-			catch(FileNotFoundException e){
-				System.out.println("Could not find file.");
+			else {
+				System.out.println("Invalid request");
 			}
-			catch(IOException e){
-				System.out.println("Error opening file.");
-			}
-			
+
 			/* Switch intent with language and image file to read from */
 			Intent imagePreprocessor = new Intent(this, ImagePreprocessor.class);
-			imagePreprocessor.putExtra("file", intentFile);
+			imagePreprocessor.putExtra("file", sourceFile);
 			imagePreprocessor.putExtra("lang", lang);
 			startActivity(imagePreprocessor);
 		}
-	}
-	
-	private void copy(File src, File dst) throws IOException {
-	    FileInputStream in = new FileInputStream(src);
-	    FileOutputStream out = new FileOutputStream(dst);
-
-	    // Transfer bytes from in to out
-	    byte[] buf = new byte[1024];
-	    int len;
-	    while ((len = in.read(buf)) > 0) {
-	        out.write(buf, 0, len);
-	    }
-	    in.close();
-	    out.close();
 	}
 
 	// Next two methods are for help button popup
@@ -275,5 +234,19 @@ public class StartActivity extends Activity implements OnItemSelectedListener{
 				popup.dismiss();
 			}
 		});
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		return super.onOptionsItemSelected(item);
 	}
 }

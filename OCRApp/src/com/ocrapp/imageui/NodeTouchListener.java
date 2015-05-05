@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.graphics.Point;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.DragShadowBuilder;
 import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 
@@ -25,7 +24,6 @@ public class NodeTouchListener implements OnTouchListener {
 		if(motionEvent.getAction() == MotionEvent.ACTION_DOWN){
 
 			ClipData data = ClipData.newPlainText("", "");
-			//			DragShadowBuilder shadowBuilder = new DragShadowBuilder(view);
 			NodeDragShadow shadowBuilder = new NodeDragShadow(view, nodeNumber);
 			System.out.println("ACTION DOWN");
 			view.startDrag(data, shadowBuilder, view, 0);
